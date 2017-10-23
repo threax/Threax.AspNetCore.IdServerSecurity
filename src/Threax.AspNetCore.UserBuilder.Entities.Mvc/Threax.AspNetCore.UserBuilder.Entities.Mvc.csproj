@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Threax.AspNetCore.ExceptionFilter\Threax.AspNetCore.ExceptionFilter.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.Halcyon.Ext\Threax.AspNetCore.Halcyon.Ext.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.UserBuilder.Entities\Threax.AspNetCore.UserBuilder.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

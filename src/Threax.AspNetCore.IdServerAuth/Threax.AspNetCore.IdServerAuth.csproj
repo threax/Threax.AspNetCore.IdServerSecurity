@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Threax.AspNetCore.AccessTokens\Threax.AspNetCore.AccessTokens.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.IdServerMetadata\Threax.AspNetCore.IdServerMetadata.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.JwtCookieAuth\Threax.AspNetCore.JwtCookieAuth.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.UserBuilder\Threax.AspNetCore.UserBuilder.csproj" />
+  </ItemGroup>
+
+</Project>
