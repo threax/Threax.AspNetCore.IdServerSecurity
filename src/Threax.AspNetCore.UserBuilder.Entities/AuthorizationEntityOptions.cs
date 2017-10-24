@@ -16,7 +16,19 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
         public String UserToRoleTableName { get; set; } = "spc.auth.UsersToRoles";
 
-        public void ApplyServices(IServiceCollection services)
+        public string LogFragment => "";
+
+        public bool ApplyServices(IServiceCollection services)
+        {
+            return false;
+        }
+
+        public long GetServiceProviderHashCode()
+        {
+            return 0;
+        }
+
+        public void Validate(IDbContextOptions options)
         {
             
         }
