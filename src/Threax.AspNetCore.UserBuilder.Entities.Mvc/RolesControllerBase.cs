@@ -17,7 +17,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         public const String GetUser = "GetUser";
     }
 
-    [Authorize(Roles = AuthorizationAdminRoles.EditRoles, ActiveAuthenticationSchemes = AuthCoreSchemes.Bearer)]
+    [Authorize(Roles = AuthorizationAdminRoles.EditRoles, AuthenticationSchemes = AuthCoreSchemes.Bearer)]
     public abstract class RolesControllerBase<TRoleAssignments, TCollection> : Controller
         where TRoleAssignments : IRoleAssignments, new()
         where TCollection : UserCollectionBase<TRoleAssignments>
@@ -81,7 +81,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         /// <param name="userId">The user id to delete</param>
         [HttpDelete("{UserId}")]
         [HalRel(RolesControllerRels.DeleteUser)]
-        [Authorize(Roles = AuthorizationAdminRoles.SuperAdmin, ActiveAuthenticationSchemes = AuthCoreSchemes.Bearer)]
+        [Authorize(Roles = AuthorizationAdminRoles.SuperAdmin, AuthenticationSchemes = AuthCoreSchemes.Bearer)]
         public virtual Task DeleteUser(Guid userId)
         {
             return roleManager.DeleteUser(userId);
