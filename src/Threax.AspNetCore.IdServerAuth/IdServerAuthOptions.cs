@@ -51,10 +51,8 @@ namespace Threax.AspNetCore.IdServerAuth
         public bool ActAsApi { get; set; } = true;
 
         /// <summary>
-        /// If you need to override the default scheme, set it here. By default the DefaultScheme will be set to
-        /// bearer. This should be what most apps use, however, if you have a need to change it to something else
-        /// set it here. You should only do this if you fully understand the consequences, for example setting this
-        /// to cookies will remove the xsrf protections that the bearer authentication provides.
+        /// If you need to override the default scheme, set it here. By default this will not be set to anything
+        /// and you must explicitly list which schemes will be used in your Authorize attributes.
         /// </summary>
         public String DefaultScheme { get; set; }
 
