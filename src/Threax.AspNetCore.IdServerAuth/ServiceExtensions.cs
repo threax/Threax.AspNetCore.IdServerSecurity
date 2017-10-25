@@ -65,10 +65,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 }
-                if (options.ActAsApi)
-                {
-                    o.DefaultScheme = AuthCoreSchemes.Bearer;
-                }
 
                 //If the user provides a default scheme, override it here, leave this last so it will always override.
                 if (options.DefaultScheme != null)
