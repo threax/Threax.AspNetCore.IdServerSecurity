@@ -42,7 +42,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             services.TryAddScoped<IUsersRepository, UserEntityRepository>();
             services.TryAddScoped<IUserEntityRepository, UserEntityRepository>();
             services.TryAddScoped<IRoleManager, RoleManager>();
-            services.TryAddScoped<IAdminRoleProvider, NeverAdminRoleProvider>();
+            services.TryAddScoped<IAdminRoleProvider, IdentityAdminRoleProvider>();
 
             return services;
         }

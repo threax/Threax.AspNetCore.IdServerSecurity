@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
+namespace Threax.AspNetCore.UserBuilder.Entities
 {
     class IdentityAdminRoleProvider : IAdminRoleProvider
     {
