@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Threax.AspNetCore.AccessTokens;
+using Threax.AspNetCore.AuthCore;
 using Threax.AspNetCore.IdServerAuth;
 using Threax.AspNetCore.JwtCookieAuth;
 using Threax.AspNetCore.UserBuilder;
@@ -35,6 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             options = new IdServerAuthOptions();
             optionsBuilder.Invoke(options);
+            options.CookiePath = CookieUtils.FixPath(options.CookiePath);
 
             if(options.AppOptions == null)
             {
@@ -57,6 +59,15 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     throw new InvalidOperationException("You must provide a client id for the app to use it as a client.");
                 }
+
+                services.AddConventionalXsrf(o =>
+                {
+                    o.AntiforgeryCookie.Name = options.AppOptions.ClientId + ".Antiforgery";
+                    o.AntiforgeryCookie.Path = options.CookiePath;
+
+                    o.TokenCookie.Name = options.AppOptions.ClientId + ".RequestToken";
+                    o.TokenCookie.Path = options.CookiePath;
+                });
             }
 
             var authBuilder = services.AddAuthentication(o =>
@@ -118,7 +129,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (options.ActAsApi)
             {
-                var bearerEvents = new Threax.AspNetCore.JwtBearerAuth.JwtBearerAuthenticationEvents(Microsoft.IdentityModel.Tokens.SecurityAlgorithms.RsaSha256)
+                var bearerEvents = new JwtBearerAuthenticationEvents(Microsoft.IdentityModel.Tokens.SecurityAlgorithms.RsaSha256)
                 {
                     OnAuthorizeUser = c => c.BuildUserWithRequestServices()
                 };

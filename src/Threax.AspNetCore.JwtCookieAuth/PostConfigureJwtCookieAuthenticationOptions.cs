@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using Threax.AspNetCore.AuthCore;
 
 namespace Threax.AspNetCore.JwtCookieAuth
 {
@@ -35,28 +36,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 throw new ArgumentException("You must provide an ChallengeScheme in the options.");
             }
 
-            //Check the cookie path format
-            var cookiePath = options.CookiePath;
-            if (!String.IsNullOrEmpty(cookiePath))
-            {
-                cookiePath = cookiePath.Replace('\\', '/');
-                if (cookiePath[0] != '/')
-                {
-                    cookiePath = '/' + cookiePath;
-                }
-                int lastIndex = cookiePath.Length - 1;
-                if (cookiePath[lastIndex] == '/')
-                {
-                    cookiePath = cookiePath.Substring(0, lastIndex);
-                }
-            }
-            else
-            {
-                cookiePath = "/";
-            }
-
-            //Set back on the options
-            options.CookiePath = cookiePath;
+            options.CookiePath = CookieUtils.FixPath(options.CookiePath);
 
             //Grab the metadata
             var httpClient = new HttpClient(new HttpClientHandler());

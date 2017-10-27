@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Threax.AspNetCore.AuthCore;
 
-namespace Threax.AspNetCore.JwtBearerAuth
+namespace Threax.AspNetCore.IdServerAuth
 {
     public class JwtBearerAuthenticationEvents
     {

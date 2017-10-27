@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -16,6 +17,7 @@
     <ProjectReference Include="..\Threax.AspNetCore.IdServerMetadata\Threax.AspNetCore.IdServerMetadata.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.JwtCookieAuth\Threax.AspNetCore.JwtCookieAuth.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.UserBuilder\Threax.AspNetCore.UserBuilder.csproj" />
+    <ProjectReference Include="..\Threax.AspNetCore.Xsrf\Threax.AspNetCore.Xsrf.csproj" />
   </ItemGroup>
 
 </Project>

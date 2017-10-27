@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Threax.AspNetCore.AuthCore;
@@ -17,9 +18,12 @@ namespace Threax.AspNetCore.AccessTokens
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post([FromServices] IAntiforgery antiforgery)
         {
             var result = await HttpContext.AuthenticateAsync(options.AuthenticationScheme);
+            HttpContext.User = result.Ticket.Principal;
+
+            await antiforgery.ValidateRequestAsync(HttpContext);
 
             if (result.Succeeded)
             {
