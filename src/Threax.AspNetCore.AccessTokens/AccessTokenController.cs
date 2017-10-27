@@ -20,23 +20,23 @@ namespace Threax.AspNetCore.AccessTokens
         [HttpPost]
         public async Task<IActionResult> Post([FromServices] IAntiforgery antiforgery)
         {
+            //Make sure user is authenticated
             var result = await HttpContext.AuthenticateAsync(options.AuthenticationScheme);
-            HttpContext.User = result.Ticket.Principal;
-
-            await antiforgery.ValidateRequestAsync(HttpContext);
-
-            if (result.Succeeded)
-            {
-                return this.Json(new AccessTokenModel
-                {
-                    AccessToken = result.Principal.GetAccessToken(),
-                    HeaderName = options.BearerHeaderName
-                });
-            }
-            else
+            if (!result.Succeeded)
             {
                 return new UnauthorizedResult();
             }
+
+            //Validate antiforgery, have to set user manually
+            HttpContext.User = result.Ticket.Principal;
+            await antiforgery.ValidateRequestAsync(HttpContext);
+
+            //Won't get here unless everything was valid
+            return this.Json(new AccessTokenModel
+            {
+                AccessToken = result.Principal.GetAccessToken(),
+                HeaderName = options.BearerHeaderName
+            });
         }
     }
 }
