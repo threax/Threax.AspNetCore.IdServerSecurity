@@ -57,6 +57,13 @@ namespace Threax.AspNetCore.IdServerAuth
         }
 
         //0 - json
-        private const String content = "window.xsrfConfig = {0};";
+        private const String content =
+@"window.hr_config = (function(next){{
+    return function(config)
+    {{
+        config.tokens = {0};
+        return next ? next(config) : config;
+    }}
+}})(window.hr_config);";
     }
 }
