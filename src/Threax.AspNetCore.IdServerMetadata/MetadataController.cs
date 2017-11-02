@@ -44,12 +44,7 @@ namespace Threax.AspNetCore.IdServerMetadata
                 var pathBase = Request.PathBase;
                 if (pathBase.HasValue)
                 {
-                    //Remove the /Metadata off the end, the rest is our virtual directory path
-                    var pathStr = pathBase.Value;
-                    if (pathStr.Length > 9)
-                    {
-                        pathBaseValue = pathStr.Remove(pathStr.Length - 9);
-                    }
+                    pathBaseValue = pathBase.Value;
                 }
                 var host = $"https://{currentUri.Authority}{pathBaseValue}";
                 clientMetadata.LogoutUri = clientMetadata.LogoutUri.Replace(MetadataConstants.HostVariable, host);
