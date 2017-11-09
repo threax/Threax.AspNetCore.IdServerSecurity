@@ -28,7 +28,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
                 authDbOptions = new AuthorizationDatabaseOptions();
             }
 
-            services.AddDbContext<TSubclassType>(o =>
+            services.AddDbContextPool<TSubclassType>(o =>
             {
                 o.UseSqlServer(connectionString, options =>
                 {
