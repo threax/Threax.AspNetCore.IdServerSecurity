@@ -35,6 +35,30 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             return await authorizedUsersDb.UserRoles.Where(r => r.UserId == id).Select(r => r.Role.Name).ToListAsync();
         }
 
+        public async Task<bool> IsUserInRoles(Guid id, IEnumerable<String> roles)
+        {
+            var user = await authorizedUsersDb.Users.Include(i => i.Roles).ThenInclude(i => i.Role).Where(u => u.UserId == id).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                return false; //False if the user has no roles
+            }
+            var userRoles = user.Roles.Select(i => i.Role.Name);
+            foreach (var role in roles)
+            {
+                if (!userRoles.Contains(role))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public async Task<IEnumerable<Guid>> GetUserIdsInRole(String role)
+        {
+            var lookup = await authorizedUsersDb.Roles.Include(i => i.Users).Where(i => i.Name == role).FirstOrDefaultAsync();
+            return lookup.Users.Select(i => i.UserId);
+        }
+
         /// <summary>
         /// Get the user specified by id. Will return null if the user does not exist.
         /// </summary>

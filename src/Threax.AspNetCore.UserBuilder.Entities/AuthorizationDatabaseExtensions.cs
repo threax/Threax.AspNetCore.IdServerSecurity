@@ -39,7 +39,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             });
 
             services.TryAddScoped<UsersDbContext, TSubclassType>(); //Make the authorization service aware of our database subclass.
-            services.TryAddScoped<IUsersRepository, UserEntityRepository>();
+            services.TryAddScoped<IUsersRepository>(s => s.GetRequiredService<IUserEntityRepository>());
             services.TryAddScoped<IUserEntityRepository, UserEntityRepository>();
             services.TryAddScoped<IRoleManager, RoleManager>();
             services.TryAddScoped<IAdminRoleProvider, IdentityAdminRoleProvider>();

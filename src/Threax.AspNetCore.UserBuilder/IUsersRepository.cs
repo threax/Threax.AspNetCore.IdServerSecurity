@@ -23,5 +23,20 @@ namespace Threax.AspNetCore.UserBuilder
         /// <param name="id">The user id to lookup.</param>
         /// <returns>An enumerator over all the roles for this user.</returns>
         Task<IEnumerable<String>> GetUserRoles(Guid id);
+
+        /// <summary>
+        /// Determine if a user is in a role specified by this repository.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <param name="roles">The string names of the roles to check.</param>
+        /// <returns>True if the user is in the role, false otherwise.</returns>
+        Task<bool> IsUserInRoles(Guid id, IEnumerable<String> roles);
+
+        /// <summary>
+        /// Get the ids of the users in the given role.
+        /// </summary>
+        /// <param name="role">The role to lookup.</param>
+        /// <returns>An enumerable over the user ids for the user in the specified role.</returns>
+        Task<IEnumerable<Guid>> GetUserIdsInRole(String role);
     }
 }

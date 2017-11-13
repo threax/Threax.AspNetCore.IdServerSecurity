@@ -22,5 +22,10 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// </summary>
         [MaxLength(450)]
         public String Name { get; set; }
+
+        /// <summary>
+        /// The role mappings for the user.
+        /// </summary>
+        public List<UserToRole> Roles { get; set; }
     }
 }
