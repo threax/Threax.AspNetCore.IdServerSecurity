@@ -4,6 +4,7 @@ using System.Text;
 using Threax.AspNetCore.JwtCookieAuth;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Threax.AspNetCore.AccessTokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Threax.AspNetCore.IdServerAuth
 {
@@ -65,5 +66,23 @@ namespace Threax.AspNetCore.IdServerAuth
         /// The signout path to use when signing out. Defaults to "/Account/SignoutCleanup".
         /// </summary>
         public String AccessDeniedPath { get; set; }
+
+        /// <summary>
+        /// Customize the jwt bearer options, this is called after the automatic configuration, so you can override any
+        /// settings you need. This is only called if your app supports bearer auth.
+        /// </summary>
+        public Action<JwtBearerOptions> CustomizeBearer { get; set; }
+
+        /// <summary>
+        /// Customize cookie options. This is called after automatic configuration, so you can override any settings you need.
+        /// This is only called if your app supports cookie auth.
+        /// </summary>
+        public Action<JwtCookieAuthenticationOptions> CustomizeCookies { get; set; }
+
+        /// <summary>
+        /// Customize the open id connect options. This is called after automatic configuration, so you can override any settings you need.
+        /// This is only called if your app supports cookie auth.
+        /// </summary>
+        public Action<OpenIdConnectOptions> CustomizeOpenIdConnect { get; set; }
     }
 }

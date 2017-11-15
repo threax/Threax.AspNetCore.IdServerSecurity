@@ -98,6 +98,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
                         OnValidatePrincipal = c => c.BuildUserWithRequestServices()
                     };
+                    options.CustomizeCookies?.Invoke(o);
                 })
                 .AddOpenIdConnect(o =>
                 {
@@ -124,6 +125,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             o.Scope.Add(scope);
                         }
                     }
+                    options.CustomizeOpenIdConnect?.Invoke(o);
                 });
             }
 
@@ -148,6 +150,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             return System.Threading.Tasks.Task.FromResult(0);
                         }
                     };
+                    options.CustomizeBearer?.Invoke(o);
                 });
             }
 
