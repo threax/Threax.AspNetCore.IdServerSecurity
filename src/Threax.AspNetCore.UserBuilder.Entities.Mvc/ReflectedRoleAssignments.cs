@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Threax.AspNetCore.Halcyon.Ext;
-using Threax.AspNetCore.Halcyon.Ext.UIAttrs;
 using Threax.AspNetCore.Models;
 
 namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
