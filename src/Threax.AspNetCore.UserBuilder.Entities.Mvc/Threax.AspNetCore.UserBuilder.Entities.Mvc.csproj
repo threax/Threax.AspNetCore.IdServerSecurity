@@ -9,14 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Threax.AspNetCore.ExceptionFilter\Threax.AspNetCore.ExceptionFilter.csproj" />
-    <ProjectReference Include="..\Threax.AspNetCore.Halcyon.Ext\Threax.AspNetCore.Halcyon.Ext.csproj" />
-    <ProjectReference Include="..\Threax.AspNetCore.Models\Threax.AspNetCore.Models.csproj" />
-    <ProjectReference Include="..\Threax.AspNetCore.UserBuilder.Entities\Threax.AspNetCore.UserBuilder.Entities.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.1" />
+    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="5.0.2" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="8.0.0" />
+    <PackageReference Include="Threax.AspNetCore.Models" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.1" />
+    <ProjectReference Include="..\Threax.AspNetCore.UserBuilder.Entities\Threax.AspNetCore.UserBuilder.Entities.csproj" />
   </ItemGroup>
 
 </Project>
