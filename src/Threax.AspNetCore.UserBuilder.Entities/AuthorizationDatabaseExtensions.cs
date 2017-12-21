@@ -30,11 +30,14 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
             services.AddDbContextPool<TSubclassType>(o =>
             {
-                o.UseSqlServer(connectionString, options =>
+                if (authDbOptions.UseSqlServer)
                 {
-                    options.MigrationsAssembly(migrationsAssembly.GetName().Name);
-                    authDbOptions.SqlServerOptionsAction?.Invoke(options);
-                });
+                    o.UseSqlServer(connectionString, options =>
+                    {
+                        options.MigrationsAssembly(migrationsAssembly.GetName().Name);
+                        authDbOptions.SqlServerOptionsAction?.Invoke(options);
+                    });
+                }
                 authDbOptions.OptionsAction?.Invoke(o);
             });
 

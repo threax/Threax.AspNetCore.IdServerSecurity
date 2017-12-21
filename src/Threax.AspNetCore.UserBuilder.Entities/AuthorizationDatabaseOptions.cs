@@ -24,5 +24,10 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// server options by using this function, but you do not need to set the migrations assembly as that will already be set.
         /// </summary>
         public Action<SqlServerDbContextOptionsBuilder> SqlServerOptionsAction { get; set; }
+
+        /// <summary>
+        /// Leave this to true to use sql server, otherwise set it to false to have just OptionsAction called.
+        /// </summary>
+        public bool UseSqlServer { get; set; } = true;
     }
 }
