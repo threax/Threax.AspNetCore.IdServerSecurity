@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Threax.AspNetCore.ExceptionFilter;
 using Threax.AspNetCore.IdServerMetadata;
 
-namespace Spc.AspNetCore.Metadata.Client
+namespace Threax.AspNetCore.IdServerMetadata.Client
 {
 #pragma warning disable // Disable all warnings
 
