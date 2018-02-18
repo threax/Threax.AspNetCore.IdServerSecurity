@@ -1,6 +1,6 @@
 set BASE=%~dp0
 set SEARCH=%BASE%src
-set OUT=%BASE%nuget
+set OUT=%BASE%nuget\
 rmdir %OUT%
 mkdir %OUT%
 pushd %BASE%

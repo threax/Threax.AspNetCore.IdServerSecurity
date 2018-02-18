@@ -28,18 +28,21 @@ namespace Threax.AspNetCore.UserBuilder.Entities
                 authDbOptions = new AuthorizationDatabaseOptions();
             }
 
-            services.AddDbContextPool<TSubclassType>(o =>
+            if (authDbOptions.UseConnectionPool)
             {
-                if (authDbOptions.UseSqlServer)
+                services.AddDbContextPool<TSubclassType>(o =>
                 {
-                    o.UseSqlServer(connectionString, options =>
-                    {
-                        options.MigrationsAssembly(migrationsAssembly.GetName().Name);
-                        authDbOptions.SqlServerOptionsAction?.Invoke(options);
-                    });
-                }
-                authDbOptions.OptionsAction?.Invoke(o);
-            });
+                    SetupDbContext(connectionString, migrationsAssembly, authDbOptions, o);
+                });
+            }
+            else
+            {
+                services.AddDbContext<TSubclassType>(o =>
+                {
+                    SetupDbContext(connectionString, migrationsAssembly, authDbOptions, o);
+                });
+            }
+            
 
             services.TryAddScoped<UsersDbContext, TSubclassType>(); //Make the authorization service aware of our database subclass.
             services.TryAddScoped<IUsersRepository>(s => s.GetRequiredService<IUserEntityRepository>());
@@ -48,6 +51,19 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             services.TryAddScoped<IAdminRoleProvider, IdentityAdminRoleProvider>();
 
             return services;
+        }
+
+        private static void SetupDbContext(string connectionString, Assembly migrationsAssembly, AuthorizationDatabaseOptions authDbOptions, DbContextOptionsBuilder o)
+        {
+            if (authDbOptions.UseSqlServer)
+            {
+                o.UseSqlServer(connectionString, options =>
+                {
+                    options.MigrationsAssembly(migrationsAssembly.GetName().Name);
+                    authDbOptions.SqlServerOptionsAction?.Invoke(options);
+                });
+            }
+            authDbOptions.OptionsAction?.Invoke(o);
         }
 
         /// <summary>

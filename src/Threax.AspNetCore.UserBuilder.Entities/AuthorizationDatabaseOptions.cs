@@ -29,5 +29,10 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Leave this to true to use sql server, otherwise set it to false to have just OptionsAction called.
         /// </summary>
         public bool UseSqlServer { get; set; } = true;
+
+        /// <summary>
+        /// Set to true (default) to use connection pooling.
+        /// </summary>
+        public bool UseConnectionPool { get; set; } = true;
     }
 }
