@@ -27,6 +27,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// </summary>
         /// <typeparam name="TRoleAssignmentType">The role type to map the roles back to.</typeparam>
         /// <param name="userId"></param>
+        /// <param name="userDescriptiveName">A pretty name for the user.</param>
         /// <returns></returns>
         public async Task<TRoleAssignmentType> GetRoles<TRoleAssignmentType>(Guid userId, String userDescriptiveName)
             where TRoleAssignmentType : IRoleAssignments, new()

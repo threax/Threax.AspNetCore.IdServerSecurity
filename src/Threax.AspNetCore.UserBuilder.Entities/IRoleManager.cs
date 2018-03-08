@@ -19,8 +19,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Get the roles for multiple users.
         /// </summary>
         /// <typeparam name="TRoleAssignmentType">The type to map the roles onto.</typeparam>
-        /// <param name="userId">The user id of the user.</param>
-        /// <param name="userDescriptiveName">A name for the user if one has not been assigned yet. For record keeping only, not used to search.</param>
+        /// <param name="userIds">The user id of the users to look up.</param>
         /// <returns></returns>
         Task<List<TRoleAssignmentType>> GetRoles<TRoleAssignmentType>(IEnumerable<Guid> userIds) where TRoleAssignmentType : IRoleAssignments, new();
 

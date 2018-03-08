@@ -93,6 +93,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         /// Delete a user.
         /// </summary>
         /// <param name="userId">The user id to delete</param>
+        /// <param name="claimCache">The claim cache.</param>
         [HttpDelete("{UserId}")]
         [HalRel(RolesControllerRels.DeleteUser)]
         [Authorize(Roles = AuthorizationAdminRoles.SuperAdmin, AuthenticationSchemes = AuthCoreSchemes.Bearer)]

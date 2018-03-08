@@ -32,6 +32,7 @@ namespace Threax.AspNetCore.IdServerMetadata
         /// <param name="clientId">The id of the client.</param>
         /// <param name="clientName">A pretty name for the client.</param>
         /// <param name="scope">The scope the client will use.</param>
+        /// <param name="logoutUri">The logout uri.</param>
         public void CreateConventionalClient (String clientId, String clientName, String scope, String logoutUri)
         {
             if (String.IsNullOrEmpty(logoutUri))

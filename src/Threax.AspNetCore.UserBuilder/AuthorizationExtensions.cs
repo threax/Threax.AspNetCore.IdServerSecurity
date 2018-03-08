@@ -14,7 +14,7 @@ namespace Threax.AspNetCore.UserBuilder
         /// Be sure you have added an IUserBuilder to the services if using this mode.
         /// </summary>
         /// <param name="services">The service collection to add to.</param>
-        /// <param name="additionalPoliciesCallback">A function to build additional users policies with access to the services.</param>
+        /// <param name="optionsCallback">Configure options.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddUserBuilderForUserWhitelistWithRoles(this IServiceCollection services, Action<UserBuilderOptions> optionsCallback = null)
         {
@@ -46,7 +46,7 @@ namespace Threax.AspNetCore.UserBuilder
         /// Be sure you have added an IUserBuilder to the services if using this mode.
         /// </summary>
         /// <param name="services">The service collection to add to.</param>
-        /// <param name="additionalPoliciesCallback">A function to build additional users policies with access to the services.</param>
+        /// <param name="optionsCallback">Configure options.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddUserBuilderForUserWhitelist(this IServiceCollection services, Action<UserBuilderOptions> optionsCallback = null)
         {
@@ -77,7 +77,7 @@ namespace Threax.AspNetCore.UserBuilder
         /// Be sure you have added an IUsersRepository to the services if using this mode.
         /// </summary>
         /// <param name="services">The service collection to add to.</param>
-        /// <param name="additionalPoliciesCallback">A function to build additional users policies with access to the services.</param>
+        /// <param name="optionsCallback">Configure options.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddUserBuilderForAllUsersWithRoles(this IServiceCollection services, Action<UserBuilderOptions> optionsCallback = null)
         {
@@ -108,7 +108,7 @@ namespace Threax.AspNetCore.UserBuilder
         /// if you need to.
         /// </summary>
         /// <param name="services">The service collection to add to.</param>
-        /// <param name="additionalPoliciesCallback">A function to build additional users policies with access to the services.</param>
+        /// <param name="optionsCallback">Configure options.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddUserBuilderForAnybody(this IServiceCollection services, Action<UserBuilderOptions> optionsCallback = null)
         {

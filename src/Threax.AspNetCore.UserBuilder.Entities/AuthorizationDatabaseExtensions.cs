@@ -19,6 +19,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// <param name="services">The service collection.</param>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="migrationsAssembly">The assembly to apply migrations to.</param>
+        /// <param name="authDbOptions">Options for the database.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddAuthorizationDatabase<TSubclassType>(this IServiceCollection services, String connectionString, Assembly migrationsAssembly, AuthorizationDatabaseOptions authDbOptions = null)
             where TSubclassType : UsersDbContext
@@ -107,7 +108,8 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// to any roles already on the user account never removed. This makes it safe to call even if the user
         /// already exists.
         /// </summary>
-        /// <param name="scope">The service scope.</param>
+        /// <param name="repo">The repository.</param>
+        /// <param name="users">The users.</param>
         /// <param name="roles">The roles.</param>
         public static async Task AddUsers(this IUserEntityRepository repo, IEnumerable<User> users, IEnumerable<String> roles)
         {
@@ -122,7 +124,8 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// to any roles already on the user account never removed. This makes it safe to call even if the user
         /// already exists.
         /// </summary>
-        /// <param name="scope">The service scope.</param>
+        /// <param name="repo">The repository.</param>
+        /// <param name="user">The user.</param>
         /// <param name="roles">The roles.</param>
         public static Task AddUser(this IUserEntityRepository repo, User user, IEnumerable<String> roles)
         {

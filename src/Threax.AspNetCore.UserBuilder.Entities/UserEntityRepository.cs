@@ -109,8 +109,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// to any roles already on the user account never removed. This makes it safe to call even if the user
         /// already exists.
         /// </summary>
-        /// <param name="context">The context to update.</param>
-        /// <param name="userId">The user id to add to the database.</param>
+        /// <param name="user">The user to add to the database.</param>
         /// <param name="roles">The roles.</param>
         public async Task AddUser(User user, IEnumerable<String> roles)
         {
@@ -137,8 +136,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// It will also reassign all the roles, removing any that the user does not have permisssion for and adding any
         /// that they do.
         /// </summary>
-        /// <param name="context">The context to update.</param>
-        /// <param name="userId">The user id to add to the database.</param>
+        /// <param name="user">The user to add to the database.</param>
         /// <param name="roles">The roles.</param>
         public async Task UpdateUser(User user, IEnumerable<Tuple<String, bool>> roles)
         {
