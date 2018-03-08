@@ -45,12 +45,6 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
             Uri metadataUri = new Uri(new Uri(options.Authority), options.MetadataPath);
 
-            //Tomorrow
-            //TO fix the compiler errors, see if you can set these properties directly on the options
-            //There is then only a couple differences between this and the original version config
-            //wise, will have to see what else can be done to get scopes and stuff correct
-            //probably close to being able to run this
-
             if (options.ConfigurationManager == null)
             {
                 options.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
