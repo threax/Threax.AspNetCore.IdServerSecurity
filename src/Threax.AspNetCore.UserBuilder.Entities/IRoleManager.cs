@@ -34,10 +34,9 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Get the users in the application along with their roles.
         /// </summary>
         /// <typeparam name="TRoleAssignmentType">The role assignment type to assign to.</typeparam>
-        /// <param name="offset">The offset into the collection of users.</param>
-        /// <param name="limit">The limit of the number of users to take.</param>
+        /// <param name="query">The query.</param>
         /// <returns></returns>
-        Task<SystemUserRoleInfo<TRoleAssignmentType>> GetUsers<TRoleAssignmentType>(int offset, int limit) where TRoleAssignmentType : IRoleAssignments, new();
+        Task<SystemUserRoleInfo<TRoleAssignmentType>> GetUsers<TRoleAssignmentType>(IRoleQuery query) where TRoleAssignmentType : IRoleAssignments, new();
 
         /// <summary>
         /// Delete the user with the specified user id from the application.

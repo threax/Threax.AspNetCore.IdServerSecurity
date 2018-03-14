@@ -115,26 +115,25 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Get the users in the application.
         /// </summary>
         /// <typeparam name="TRoleAssignmentType">The type to map the user roles back onto.</typeparam>
-        /// <param name="offset">The paged offset into the user list.</param>
-        /// <param name="limit">The limit of the number of users to take.</param>
+        /// <param name="query">The query.</param>
         /// <returns>The role assignments for the specified users.</returns>
-        public async Task<SystemUserRoleInfo<TRoleAssignmentType>> GetUsers<TRoleAssignmentType>(int offset, int limit)
+        public async Task<SystemUserRoleInfo<TRoleAssignmentType>> GetUsers<TRoleAssignmentType>(IRoleQuery query)
             where TRoleAssignmentType : IRoleAssignments, new()
         {
-            var users = userRepo.GetUsers();
+            var users = query.Create(userRepo.GetUsers());
 
             var total = await users.CountAsync();
-            var skip = offset * limit;
+            var skip = query.Offset * query.Limit;
             if(skip > total)
             {
                 skip = total;
             }
-            if(skip + limit > total)
+            if(skip + query.Limit > total)
             {
                 total -= skip;
             }
 
-            var results = await users.Skip(skip).Take(limit).ToListAsync();
+            var results = await users.Skip(skip).Take(query.Limit).ToListAsync();
             return new SystemUserRoleInfo<TRoleAssignmentType>()
             {
                 Total = total,

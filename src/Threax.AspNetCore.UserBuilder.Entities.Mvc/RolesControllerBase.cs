@@ -18,9 +18,10 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
     }
 
     [Authorize(Roles = AuthorizationAdminRoles.EditRoles, AuthenticationSchemes = AuthCoreSchemes.Bearer)]
-    public abstract class RolesControllerBase<TRoleAssignments, TCollection> : Controller
+    public abstract class RolesControllerBase<TRoleAssignments, TCollection, TRoleQuery> : Controller
         where TRoleAssignments : IRoleAssignments, new()
-        where TCollection : UserCollectionBase<TRoleAssignments>
+        where TCollection : UserCollectionBase<TRoleAssignments, TRoleQuery>
+        where TRoleQuery : RolesQuery
     {
         private IRoleManager roleManager;
         private IHttpContextAccessor contextAccessor;
@@ -33,7 +34,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
 
         [HttpGet]
         [HalRel(RolesControllerRels.ListUsers)]
-        public async virtual Task<TCollection> ListUsers([FromQuery] RolesQuery query)
+        public async virtual Task<TCollection> ListUsers([FromQuery] TRoleQuery query)
         {
             if (query.UserId.Count == 1)
             {
@@ -50,13 +51,13 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
             }
             else
             {
-                var users = await this.roleManager.GetUsers<TRoleAssignments>(query.Offset, query.Limit);
+                var users = await this.roleManager.GetUsers<TRoleAssignments>(query);
                 query.SkipTo(users.Total);
                 return GetUserCollection(query, users.Total, users.Results);
             }
         }
 
-        protected abstract TCollection GetUserCollection(RolesQuery query, int total, IEnumerable<TRoleAssignments> users);
+        protected abstract TCollection GetUserCollection(TRoleQuery query, int total, IEnumerable<TRoleAssignments> users);
 
         [HttpGet("{UserId}")]
         [HalRel(RolesControllerRels.GetUser)]
@@ -107,6 +108,15 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         public virtual Task OnUserDeleted(Guid userId)
         {
             return Task.CompletedTask;
+        }
+    }
+
+    public abstract class RolesControllerBase<TRoleAssignments, TCollection> : RolesControllerBase<TRoleAssignments, TCollection, RolesQuery>
+        where TRoleAssignments : IRoleAssignments, new()
+        where TCollection : UserCollectionBase<TRoleAssignments>
+    {
+        public RolesControllerBase(IRoleManager roleManager, IHttpContextAccessor contextAccessor) : base(roleManager, contextAccessor)
+        {
         }
     }
 }

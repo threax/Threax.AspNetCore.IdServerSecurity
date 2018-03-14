@@ -5,12 +5,13 @@ using Threax.AspNetCore.Halcyon.Ext;
 
 namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
 {
-    public class UserCollectionBase<TRoleAssignments> : PagedCollectionView<TRoleAssignments>
+    public class UserCollectionBase<TRoleAssignments, TRoleQuery> : PagedCollectionView<TRoleAssignments>
         where TRoleAssignments : IRoleAssignments, new()
+        where TRoleQuery : RolesQuery
     {
-        private RolesQuery rolesQuery;
+        private TRoleQuery rolesQuery;
 
-        public UserCollectionBase(RolesQuery query, int total, IEnumerable<TRoleAssignments> items) : base(query, total, items)
+        public UserCollectionBase(TRoleQuery query, int total, IEnumerable<TRoleAssignments> items) : base(query, total, items)
         {
             this.rolesQuery = query;
         }
@@ -25,6 +26,22 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
                     query.AppendItem("userId", id.ToString());
                 }
             }
+        }
+
+        protected TRoleQuery RolesQuery
+        {
+            get
+            {
+                return rolesQuery;
+            }
+        }
+    }
+
+    public class UserCollectionBase<TRoleAssignments> : UserCollectionBase<TRoleAssignments, RolesQuery>
+        where TRoleAssignments : IRoleAssignments, new()
+    {
+        public UserCollectionBase(RolesQuery query, int total, IEnumerable<TRoleAssignments> items) : base(query, total, items)
+        {
         }
     }
 }
