@@ -127,18 +127,21 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
         public Task SignOutAsync(AuthenticationProperties properties)
         {
+            //There is no end to the pain of trying to get this right, fix the path here to ensure its correct.
+            var cookiePath = CookieUtils.FixPath(Options.CookiePath);
+
             Response.Cookies.Delete(BearerCookieName, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = true,
-                Path = Options.CookiePath
+                Path = cookiePath
             });
 
             Response.Cookies.Delete(RefreshCookieName, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = true,
-                Path = Options.CookiePath
+                Path = cookiePath
             });
 
             return Task.FromResult(0);
@@ -146,11 +149,14 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
         private void SetTokenCookies(String accessToken, SecurityToken token, String refreshToken)
         {
+            //There is no end to the pain of trying to get this right, fix the path here to ensure its correct.
+            var cookiePath = CookieUtils.FixPath(Options.CookiePath);
+
             Response.Cookies.Append(BearerCookieName, accessToken, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = true,
-                Path = Options.CookiePath,
+                Path = cookiePath,
                 Expires = token.ValidTo
             });
 
@@ -158,7 +164,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
             {
                 Secure = true,
                 HttpOnly = true,
-                Path = Options.CookiePath,
+                Path = cookiePath,
                 Expires = token.ValidTo
             });
         }
