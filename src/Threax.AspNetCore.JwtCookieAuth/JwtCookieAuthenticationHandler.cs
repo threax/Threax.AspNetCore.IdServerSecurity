@@ -152,12 +152,14 @@ namespace Threax.AspNetCore.JwtCookieAuth
             //There is no end to the pain of trying to get this right, fix the path here to ensure its correct.
             var cookiePath = CookieUtils.FixPath(Options.CookiePath);
 
+            var expires = Options.StoreCookiesInSession ? default(DateTimeOffset?) : token.ValidTo;
+
             Response.Cookies.Append(BearerCookieName, accessToken, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = true,
                 Path = cookiePath,
-                Expires = token.ValidTo
+                Expires = expires
             });
 
             Response.Cookies.Append(RefreshCookieName, refreshToken, new CookieOptions()
@@ -165,7 +167,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 Secure = true,
                 HttpOnly = true,
                 Path = cookiePath,
-                Expires = token.ValidTo
+                Expires = expires
             });
         }
 

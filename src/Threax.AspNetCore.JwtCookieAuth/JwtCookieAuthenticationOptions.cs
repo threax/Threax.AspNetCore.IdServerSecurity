@@ -65,6 +65,12 @@ namespace Threax.AspNetCore.JwtCookieAuth
         /// </summary>
         public string AccessDeniedPath { get; set; }
 
+        /// <summary>
+        /// Set this to true (default) to store cookies in session memory with no expiration instead of using the token's
+        /// expiration date. Tokens will still expire on their own, so this won't make them last forever.
+        /// </summary>
+        public bool StoreCookiesInSession { get; set; } = true;
+
         public ConfigurationManager<OpenIdConnectConfiguration> ConfigurationManager { get; set; }
 
         public TokenValidationParameters TokenValidationParameters { get; set; }
