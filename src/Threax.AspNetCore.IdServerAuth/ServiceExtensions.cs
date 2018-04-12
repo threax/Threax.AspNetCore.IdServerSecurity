@@ -159,7 +159,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 authBuilder.AddIdServerMetadataAuth(o =>
                 {
                     o.Authority = options.AppOptions.Authority;
-                    options?.ConfigureIdServerMetadataJwtOptions(o);
+                    options.ConfigureIdServerMetadataJwtOptions?.Invoke(o);
                 });
             }
 
