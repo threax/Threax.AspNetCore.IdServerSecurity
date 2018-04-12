@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Threax.AspNetCore.IdServerMetadata
@@ -68,6 +69,29 @@ namespace Threax.AspNetCore.IdServerMetadata
                 LogoutUri = $"{MetadataConstants.HostVariable}{logoutUri}",
                 AllowedScopes = allowedScopes,
                 LogoutSessionRequired = true,
+                EnableLocalLogin = false,
+                AccessTokenLifetime = 3600
+            };
+        }
+
+        public ClientMetadata ClientCredentials { get; set; }
+
+        /// <summary>
+        /// Set the Client propety to a conventional setup for client metadata. This makes it easier to create this metadata
+        /// without needing to supply the full configuration.
+        /// </summary>
+        /// <param name="clientId">The id of the client.</param>
+        /// <param name="clientName">A pretty name for the client.</param>
+        /// <param name="scopes">Additional required scopes.</param>
+        public void CreateConventionalClientCredentials(String clientId, String clientName, IEnumerable<String> scopes)
+        {
+            ClientCredentials = new ClientMetadata()
+            {
+                ClientId = clientId + ".ClientCreds",
+                Name = clientName + " Client Credentials",
+                AllowedGrantTypes = new List<string>() { "client_credentials" },
+                AllowedScopes = scopes.ToList(),
+                LogoutSessionRequired = false,
                 EnableLocalLogin = false,
                 AccessTokenLifetime = 3600
             };

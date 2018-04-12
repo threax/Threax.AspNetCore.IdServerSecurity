@@ -189,6 +189,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath, options.AppOptions.AdditionalScopes);
                 }
+                if (options.CreateClientCredentialsMetadata)
+                {
+                    o.CreateConventionalClientCredentials(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.ClientCredentialsScopes);
+                }
             });
 
             if (options.ActAsClient && options.EnableAccessTokenMiddleware)

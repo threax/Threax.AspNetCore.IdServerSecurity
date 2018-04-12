@@ -168,6 +168,74 @@ namespace Threax.AspNetCore.IdServerMetadata.Client
             throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
         }
 
+
+        /// <summary>Get the client metadata from targetUrl.</summary>
+        /// <returns>Success</returns>
+        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        public Task<ClientMetadata> ClientCredentialsAsync(string targetUrl, string bearer)
+        {
+            return ClientCredentialsAsync(targetUrl, bearer, CancellationToken.None);
+        }
+
+        /// <summary>Get the client metadata from targetUrl.</summary>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        public async Task<ClientMetadata> ClientCredentialsAsync(string targetUrl, string bearer, CancellationToken cancellationToken)
+        {
+            var url_ = string.Format("{0}/{1}?", BaseUrl, "Metadata/ClientCredentials");
+
+            if (targetUrl != null)
+                url_ += string.Format("targetUrl={0}&", Uri.EscapeDataString(targetUrl.ToString()));
+
+            var client_ = new HttpClient();
+            var request_ = new HttpRequestMessage();
+            PrepareRequest(client_, ref url_);
+            request_.Headers.TryAddWithoutValidation("bearer", bearer);
+            request_.Method = new HttpMethod("GET");
+            request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
+            var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
+            ProcessResponse(client_, response_);
+
+            var responseData_ = await response_.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            var status_ = ((int)response_.StatusCode).ToString();
+
+            if (status_ == "200")
+            {
+                var result_ = default(ClientMetadata);
+                try
+                {
+                    if (responseData_.Length > 0)
+                        result_ = JsonConvert.DeserializeObject<ClientMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
+                    return result_;
+                }
+                catch (Exception exception)
+                {
+                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
+                }
+            }
+            else
+            if (status_ == "500")
+            {
+                var result_ = default(ExceptionResult);
+                try
+                {
+                    if (responseData_.Length > 0)
+                        result_ = JsonConvert.DeserializeObject<ExceptionResult>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
+                }
+                catch (Exception exception)
+                {
+                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
+                }
+                throw new SwaggerException<ExceptionResult>("Internal Server Error", status_, responseData_, result_, null);
+            }
+            else
+            {
+            }
+
+            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
+        }
+
     }
 
     internal class SwaggerException<T> : Exception

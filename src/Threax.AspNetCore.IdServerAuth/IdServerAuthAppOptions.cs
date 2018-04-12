@@ -27,9 +27,19 @@ namespace Threax.AspNetCore.IdServerAuth
         public String DisplayName { get; set; }
 
         /// <summary>
-        /// Any additional scopes that this app should request.
+        /// Any additional scopes that this app should request for user tokens. This will allow
+        /// those user tokens to be flowed to those additional apps.
         /// </summary>
         public List<String> AdditionalScopes { get; set; }
+
+        /// <summary>
+        /// Any scopes that will be used in the client credentials version of the client metadata.
+        /// The client credentials are how this applicaiton can log into other services to get their
+        /// data. Those services should be listed here so they are included in the application's jwt
+        /// that id server creates. This is used when the applicaiton needs to login to a service directly
+        /// and cannot just send the user's token along.
+        /// </summary>
+        public List<String> ClientCredentialsScopes { get; set; }
 
         /// <summary>
         /// The client secret for this app. This can be null to have no secret. It defaults to

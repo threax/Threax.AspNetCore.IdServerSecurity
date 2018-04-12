@@ -53,5 +53,11 @@ namespace Threax.AspNetCore.IdServerMetadata
 
             return clientMetadata;
         }
+
+        [HttpGet]
+        public ClientMetadata ClientCredentials()
+        {
+            return options.ClientCredentials;
+        }
     }
 }

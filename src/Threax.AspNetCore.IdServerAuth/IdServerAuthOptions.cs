@@ -59,6 +59,11 @@ namespace Threax.AspNetCore.IdServerAuth
         public bool ActAsApi { get; set; } = true;
 
         /// <summary>
+        /// Set this to true (default) to create client credentials metadata for this app.
+        /// </summary>
+        public bool CreateClientCredentialsMetadata { get; set; } = true;
+
+        /// <summary>
         /// If you need to override the default scheme, set it here. By default this will not be set to anything
         /// and you must explicitly list which schemes will be used in your Authorize attributes.
         /// </summary>
