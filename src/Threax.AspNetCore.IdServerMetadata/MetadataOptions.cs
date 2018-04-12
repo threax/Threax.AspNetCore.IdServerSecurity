@@ -33,7 +33,8 @@ namespace Threax.AspNetCore.IdServerMetadata
         /// <param name="clientName">A pretty name for the client.</param>
         /// <param name="scope">The scope the client will use.</param>
         /// <param name="logoutUri">The logout uri.</param>
-        public void CreateConventionalClient (String clientId, String clientName, String scope, String logoutUri)
+        /// <param name="additionalScopes">Additional required scopes.</param>
+        public void CreateConventionalClient (String clientId, String clientName, String scope, String logoutUri, IEnumerable<String> additionalScopes)
         {
             if (String.IsNullOrEmpty(logoutUri))
             {
@@ -46,6 +47,18 @@ namespace Threax.AspNetCore.IdServerMetadata
                 logoutUri = "/" + logoutUri;
             }
 
+            var allowedScopes = new List<string>()
+            {
+                "openid",
+                "profile",
+                "offline_access",
+                scope
+            };
+            if(additionalScopes != null)
+            {
+                allowedScopes.AddRange(additionalScopes);
+            }
+
             Client = new ClientMetadata()
             {
                 ClientId = clientId,
@@ -53,13 +66,7 @@ namespace Threax.AspNetCore.IdServerMetadata
                 AllowedGrantTypes = new List<string>() { "hybrid" },
                 RedirectUris = new List<string>() { $"{MetadataConstants.HostVariable}/signin-oidc" },
                 LogoutUri = $"{MetadataConstants.HostVariable}{logoutUri}",
-                AllowedScopes = new List<string>()
-                {
-                    "openid",
-                    "profile",
-                    "offline_access",
-                    scope
-                },
+                AllowedScopes = allowedScopes,
                 LogoutSessionRequired = true,
                 EnableLocalLogin = false,
                 AccessTokenLifetime = 3600

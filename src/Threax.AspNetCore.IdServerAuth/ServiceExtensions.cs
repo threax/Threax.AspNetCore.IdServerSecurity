@@ -187,7 +187,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
                 if (options.ActAsClient)
                 {
-                    o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath);
+                    o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath, options.AppOptions.AdditionalScopes);
                 }
             });
 
