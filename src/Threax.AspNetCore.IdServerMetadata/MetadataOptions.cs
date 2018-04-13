@@ -90,7 +90,7 @@ namespace Threax.AspNetCore.IdServerMetadata
                 ClientId = clientId + ".ClientCreds",
                 Name = clientName + " Client Credentials",
                 AllowedGrantTypes = new List<string>() { "client_credentials" },
-                AllowedScopes = scopes.ToList(),
+                AllowedScopes = scopes?.ToList(),
                 LogoutSessionRequired = false,
                 EnableLocalLogin = false,
                 AccessTokenLifetime = 3600
