@@ -188,7 +188,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
         {
             if (!String.IsNullOrEmpty(Options.AccessDeniedPath))
             {
-                Response.Redirect(Options.AccessDeniedPath);
+                Response.Redirect(BuildRedirectUri(Options.AccessDeniedPath));
                 return Task.CompletedTask;
             }
             else
