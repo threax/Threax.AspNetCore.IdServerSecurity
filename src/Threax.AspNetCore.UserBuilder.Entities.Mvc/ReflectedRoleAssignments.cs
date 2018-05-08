@@ -43,7 +43,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         {
             foreach (var property in this.GetType().GetTypeInfo().GetProperties())
             {
-                if (property.PropertyType == typeof(bool))
+                if (property.PropertyType == typeof(bool) && property.CanWrite)
                 {
                     property.SetValue(this, roles.Contains(property.Name));
                 }
