@@ -31,10 +31,7 @@ namespace Threax.AspNetCore.UserBuilder
                 IUserBuilder builder = GetAdditionalPolicies(s, options.ConfigureAddititionalPolicies);
                 builder = new UserRoleBuilder(usersRepo, log, builder);
                 builder = new UserWhitelistAuthorizer(usersRepo, log, builder);
-                if (options.UseClaimsCache)
-                {
-                    builder = new CachedClaimsUserBuilder(s.GetRequiredService<IClaimCache>(), builder);
-                }
+                builder = GetPrefixPolicies(s, builder, options);
                 return builder;
             });
 
@@ -62,10 +59,7 @@ namespace Threax.AspNetCore.UserBuilder
                 var log = loggerFactory.CreateLogger("Authentication");
                 var builder = GetAdditionalPolicies(s, options.ConfigureAddititionalPolicies);
                 builder =  new UserWhitelistAuthorizer(usersRepo, log, builder);
-                if (options.UseClaimsCache)
-                {
-                    builder = new CachedClaimsUserBuilder(s.GetRequiredService<IClaimCache>(), builder);
-                }
+                builder = GetPrefixPolicies(s, builder, options);
                 return builder;
             });
 
@@ -93,10 +87,7 @@ namespace Threax.AspNetCore.UserBuilder
                 var log = loggerFactory.CreateLogger("Authentication");
                 var builder = GetAdditionalPolicies(s, options.ConfigureAddititionalPolicies);
                 builder = new UserRoleBuilder(usersRepo, log, builder);
-                if (options.UseClaimsCache)
-                {
-                    builder = new CachedClaimsUserBuilder(s.GetRequiredService<IClaimCache>(), builder);
-                }
+                builder = GetPrefixPolicies(s, builder, options);
                 return builder;
             });
 
@@ -122,10 +113,7 @@ namespace Threax.AspNetCore.UserBuilder
             {
                 var builder = GetAdditionalPolicies(s, options.ConfigureAddititionalPolicies);
                 builder = new AllAccessAuthorizer(builder);
-                if (options.UseClaimsCache)
-                {
-                    builder = new CachedClaimsUserBuilder(s.GetRequiredService<IClaimCache>(), builder);
-                }
+                builder = GetPrefixPolicies(s, builder, options);
                 return builder;
             });
 
@@ -141,6 +129,20 @@ namespace Threax.AspNetCore.UserBuilder
             }
 
             return additionalPolicies;
+        }
+
+        public static IUserBuilder GetPrefixPolicies(IServiceProvider services, IUserBuilder builder, UserBuilderOptions options)
+        {
+            if (options.UseClaimsCache)
+            {
+                builder = new CachedClaimsUserBuilder(services.GetRequiredService<IClaimCache>(), builder);
+            }
+            if (options.ConfigurePrefixPolicies != null)
+            {
+                builder = options.ConfigurePrefixPolicies(new PrefixPoliciesCallbackArgs(services, builder));
+            }
+
+            return builder;
         }
     }
 }

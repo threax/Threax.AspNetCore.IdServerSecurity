@@ -8,9 +8,16 @@ namespace Threax.AspNetCore.UserBuilder
     public class UserBuilderOptions
     {
         /// <summary>
-        /// A callback to add additional user policies to the policy chain.
+        /// A callback to add additional user policies to the policy chain. These policies will be added
+        /// to the end of the chain.
         /// </summary>
         public Func<AdditionalPoliciesCallbackArgs, IUserBuilder> ConfigureAddititionalPolicies { get; set; }
+
+        /// <summary>
+        /// A callback to add additional user policies to the policy chain. These policies will be added
+        /// to the beginning of the chain.
+        /// </summary>
+        public Func<PrefixPoliciesCallbackArgs, IUserBuilder> ConfigurePrefixPolicies { get; set; }
 
         /// <summary>
         /// Use the in memory cache for building user claims. This will only really work if the app is running in a single
