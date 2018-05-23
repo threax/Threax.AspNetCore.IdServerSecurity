@@ -25,6 +25,7 @@ namespace Microsoft.AspNetCore.Builder
 
         public static AuthenticationBuilder AddJwtCookie(this AuthenticationBuilder builder, string authenticationScheme, string displayName, Action<JwtCookieAuthenticationOptions> configureOptions)
         {
+            builder.Services.TryAddSingleton<ITokenValidationParametersProvider, TokenValidationParametersProvider>();
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<JwtCookieAuthenticationOptions>, PostConfigureJwtCookieAuthenticationOptions>());
             builder.AddScheme<JwtCookieAuthenticationOptions, JwtCookieAuthenticationHandler>(authenticationScheme, displayName, configureOptions);
             return builder;

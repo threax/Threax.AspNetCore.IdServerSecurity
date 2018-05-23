@@ -37,44 +37,6 @@ namespace Threax.AspNetCore.JwtCookieAuth
             }
 
             options.CookiePath = CookieUtils.FixPath(options.CookiePath);
-
-            //Grab the metadata
-            var httpClient = new HttpClient(new HttpClientHandler());
-            httpClient.Timeout = TimeSpan.FromMinutes(1);
-            httpClient.MaxResponseContentBufferSize = 1024 * 1024 * 10; // 10 MB
-
-            Uri metadataUri = new Uri(new Uri(options.Authority), options.MetadataPath);
-
-            if (options.ConfigurationManager == null)
-            {
-                options.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                    metadataUri.AbsoluteUri,
-                    new OpenIdConnectConfigurationRetriever(),
-                    new HttpDocumentRetriever(httpClient) { RequireHttps = true }
-                );
-            }
-
-            if (options.TokenValidationParameters == null)
-            {
-                var configManager = options.ConfigurationManager;
-                var task = configManager.GetConfigurationAsync(new CancellationToken());
-                task.Wait();
-                var config = task.Result;
-
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = config.SigningKeys.FirstOrDefault(),
-
-                    ValidateIssuer = true,
-                    ValidIssuer = config.Issuer,
-
-                    ValidateAudience = false,
-
-                    ValidateLifetime = false,
-                    ClockSkew = TimeSpan.FromSeconds(5),
-                };
-            }
         }
     }
 }

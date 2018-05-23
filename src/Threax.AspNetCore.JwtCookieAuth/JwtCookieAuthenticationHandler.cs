@@ -19,10 +19,12 @@ namespace Threax.AspNetCore.JwtCookieAuth
         IAuthenticationSignInHandler,
         IAuthenticationSignOutHandler
     {
-        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
+        private ITokenValidationParametersProvider tokenValidationParametersProvider;
+
+        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider) 
             : base(options, logger, encoder, clock)
         {
-            
+            this.tokenValidationParametersProvider = tokenValidationParametersProvider;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -38,7 +40,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
             ClaimsPrincipal principal = null;
             SecurityToken token = null;
 
-            var accessTokenValidationParameters = Options.TokenValidationParameters;
+            var accessTokenValidationParameters = await this.tokenValidationParametersProvider.GetTokenValidationParameters(Options);
 
             principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
             CheckSecurityAlgo(token);
@@ -106,7 +108,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
             return AuthenticateResult.Success(authTicket);
         }
 
-        public Task SignInAsync(ClaimsPrincipal user, AuthenticationProperties properties)
+        public async Task SignInAsync(ClaimsPrincipal user, AuthenticationProperties properties)
         {
             var accessTokenString = properties.Items[".Token.access_token"];
 
@@ -116,13 +118,11 @@ namespace Threax.AspNetCore.JwtCookieAuth
             SecurityToken token = null;
 
             //Validate the token
-            var accessTokenValidationParameters = Options.TokenValidationParameters;
+            var accessTokenValidationParameters = await this.tokenValidationParametersProvider.GetTokenValidationParameters(Options);
             principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
             CheckSecurityAlgo(token);
 
             SetTokenCookies(accessTokenString, token, properties.Items[".Token.refresh_token"]);
-
-            return Task.FromResult(0);
         }
 
         public Task SignOutAsync(AuthenticationProperties properties)

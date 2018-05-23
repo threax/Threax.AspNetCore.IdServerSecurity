@@ -70,9 +70,5 @@ namespace Threax.AspNetCore.JwtCookieAuth
         /// expiration date. Tokens will still expire on their own, so this won't make them last forever.
         /// </summary>
         public bool StoreCookiesInSession { get; set; } = true;
-
-        public ConfigurationManager<OpenIdConnectConfiguration> ConfigurationManager { get; set; }
-
-        public TokenValidationParameters TokenValidationParameters { get; set; }
     }
 }
