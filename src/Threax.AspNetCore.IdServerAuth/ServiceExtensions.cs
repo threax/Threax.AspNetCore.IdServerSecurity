@@ -94,6 +94,9 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.CookiePath = options.CookiePath;
                     o.ChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                     o.AccessDeniedPath = options.AccessDeniedPath;
+                    o.ValidateAudience = true;
+                    o.ValidAudiences = new String[] { options.AppOptions.ClientId };
+                    o.ValidateLifetime = true;
                     o.Events = new JwtCookieEvents()
                     {
                         OnValidatePrincipal = c => c.BuildUserWithRequestServices()

@@ -59,10 +59,11 @@ namespace Threax.AspNetCore.JwtCookieAuth
                             ValidateIssuer = true,
                             ValidIssuer = config.Issuer,
 
-                            ValidateAudience = false,
+                            ValidateAudience = options.ValidateAudience,
+                            ValidAudiences = options.ValidAudiences,
 
-                            ValidateLifetime = false,
-                            ClockSkew = TimeSpan.FromSeconds(5),
+                            ValidateLifetime = options.ValidateLifetime,
+                            ClockSkew = options.ClockSkew,
                         };
                     }
                 }
