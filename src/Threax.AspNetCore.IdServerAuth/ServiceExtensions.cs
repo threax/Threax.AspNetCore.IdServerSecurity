@@ -95,7 +95,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.ChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                     o.AccessDeniedPath = options.AccessDeniedPath;
                     o.ValidateAudience = true;
-                    o.ValidAudiences = new String[] { options.AppOptions.ClientId };
+                    o.ValidAudiences = new String[] { options.AppOptions.Scope };
                     o.ValidateLifetime = true;
                     o.Events = new JwtCookieEvents()
                     {
@@ -114,6 +114,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.UseTokenLifetime = true;
                     o.GetClaimsFromUserInfoEndpoint = false;
                     o.RemoteSignOutPath = options.RemoteSignOutPath;
+                    o.TokenValidationParameters.ValidAudiences = new String[] { options.AppOptions.Scope };
+                    o.TokenValidationParameters.ValidateAudience = true;
 
                     o.Scope.Clear();
                     o.Scope.Add("openid");
