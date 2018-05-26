@@ -1,6 +1,7 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -14,14 +15,15 @@ using Threax.AspNetCore.AuthCore;
 
 namespace Threax.AspNetCore.JwtCookieAuth
 {
-    public class JwtCookieAuthenticationHandler : 
+    public class JwtCookieAuthenticationHandler :
         AuthenticationHandler<JwtCookieAuthenticationOptions>,
         IAuthenticationSignInHandler,
         IAuthenticationSignOutHandler
     {
         private ITokenValidationParametersProvider tokenValidationParametersProvider;
+        private String responseRedirectPath = null;
 
-        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider) 
+        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider)
             : base(options, logger, encoder, clock)
         {
             this.tokenValidationParametersProvider = tokenValidationParametersProvider;
@@ -42,7 +44,17 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
             var accessTokenValidationParameters = await this.tokenValidationParametersProvider.GetTokenValidationParameters(Options);
 
-            principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
+            try
+            {
+                principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
+            }
+            catch (SecurityTokenExpiredException ex)
+            {
+                EraseCookies();
+                responseRedirectPath = Context.Request.GetDisplayUrl();
+                Logger.LogInformation($"SecurityTokenExpiredException: Erasing Cookies and Redirecting to {responseRedirectPath}. Exception Message:\n{ex.Message}");
+                return AuthenticateResult.Fail(ex);
+            }
             CheckSecurityAlgo(token);
 
             //If we are beyond halfway through the refresh period, refresh the token from the id server.
@@ -127,6 +139,13 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
         public Task SignOutAsync(AuthenticationProperties properties)
         {
+            EraseCookies();
+
+            return Task.FromResult(0);
+        }
+
+        private void EraseCookies()
+        {
             //There is no end to the pain of trying to get this right, fix the path here to ensure its correct.
             var cookiePath = CookieUtils.FixPath(Options.CookiePath);
 
@@ -143,8 +162,6 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 HttpOnly = true,
                 Path = cookiePath
             });
-
-            return Task.FromResult(0);
         }
 
         private void SetTokenCookies(String accessToken, SecurityToken token, String refreshToken)
@@ -186,15 +203,19 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
         protected override Task HandleForbiddenAsync(AuthenticationProperties properties)
         {
+            if (!String.IsNullOrEmpty(responseRedirectPath))
+            {
+                Response.Redirect(responseRedirectPath);
+                return Task.CompletedTask;
+            }
+
             if (!String.IsNullOrEmpty(Options.AccessDeniedPath))
             {
                 Response.Redirect(BuildRedirectUri(Options.AccessDeniedPath));
                 return Task.CompletedTask;
             }
-            else
-            {
-                return base.HandleForbiddenAsync(properties);
-            }
+
+            return base.HandleForbiddenAsync(properties);
         }
 
         private void CheckSecurityAlgo(SecurityToken token)
