@@ -21,30 +21,9 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// <param name="migrationsAssembly">The assembly to apply migrations to.</param>
         /// <param name="authDbOptions">Options for the database.</param>
         /// <returns>The service collection.</returns>
-        public static IServiceCollection AddAuthorizationDatabase<TSubclassType>(this IServiceCollection services, String connectionString, Assembly migrationsAssembly, AuthorizationDatabaseOptions authDbOptions = null)
+        public static IServiceCollection AddAuthorizationDatabase<TSubclassType>(this IServiceCollection services)
             where TSubclassType : UsersDbContext
         {
-            if(authDbOptions == null)
-            {
-                authDbOptions = new AuthorizationDatabaseOptions();
-            }
-
-            if (authDbOptions.UseConnectionPool)
-            {
-                services.AddDbContextPool<TSubclassType>(o =>
-                {
-                    SetupDbContext(connectionString, migrationsAssembly, authDbOptions, o);
-                });
-            }
-            else
-            {
-                services.AddDbContext<TSubclassType>(o =>
-                {
-                    SetupDbContext(connectionString, migrationsAssembly, authDbOptions, o);
-                });
-            }
-            
-
             services.TryAddScoped<UsersDbContext, TSubclassType>(); //Make the authorization service aware of our database subclass.
             services.TryAddScoped<IUsersRepository>(s => s.GetRequiredService<IUserEntityRepository>());
             services.TryAddScoped<IUserEntityRepository, UserEntityRepository>();
@@ -52,19 +31,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             services.TryAddScoped<IAdminRoleProvider, IdentityAdminRoleProvider>();
 
             return services;
-        }
-
-        private static void SetupDbContext(string connectionString, Assembly migrationsAssembly, AuthorizationDatabaseOptions authDbOptions, DbContextOptionsBuilder o)
-        {
-            if (authDbOptions.UseSqlServer)
-            {
-                o.UseSqlServer(connectionString, options =>
-                {
-                    options.MigrationsAssembly(migrationsAssembly.GetName().Name);
-                    authDbOptions.SqlServerOptionsAction?.Invoke(options);
-                });
-            }
-            authDbOptions.OptionsAction?.Invoke(o);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -10,7 +10,16 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Rebuilt for .net core 2.1. Had runtime errors inside entity framework otherwise. If you aren't on 2.1 yet don't update this to 3.0.0 yet.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed dependency on sql server library. Refactored AddAuthorizationDatabase the client is now responsible for calling UseSqlServer with the appropriate server themselves.
+This is commonly fixed by changing your call to services.AddAuthorizationDatabase&lt;AppDbContext&gt; call to
+            services.AddAuthorizationDatabase&lt;AppDbContext&gt;()
+                    .AddDbContextPool&lt;AppDbContext&gt;(o =&gt;
+                    {
+                        o.UseSqlServer(connectionString, options =&gt;
+                        {
+                            options.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name);
+                        });
+                    });</PackageReleaseNotes>
     <Description>Entity framework connections for the user builder.</Description>
   </PropertyGroup>
 
@@ -25,8 +34,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
