@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.2.1</Version>
+    <Version>4.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Don't attempt to set roles on properties that can't be written to.</PackageReleaseNotes>
+    <PackageReleaseNotes>Requires Threax.AspNetCore.Halcyon.Ext version 10.0.0 or greater. Fixes compilation issue.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,7 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.1" />
     <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="5.0.2" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="8.0.0" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="10.0.0" />
     <PackageReference Include="Threax.AspNetCore.Models" Version="3.1.0" />
   </ItemGroup>
 

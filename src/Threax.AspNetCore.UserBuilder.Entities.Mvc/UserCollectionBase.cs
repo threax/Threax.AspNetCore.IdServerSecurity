@@ -16,7 +16,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
             this.rolesQuery = query;
         }
 
-        protected override void AddCustomQuery(string rel, QueryStringBuilder query)
+        protected override void AddCustomQuery(string rel, RequestDataBuilder query)
         {
             base.AddCustomQuery(rel, query);
             if(rolesQuery.UserId != null && rolesQuery.UserId.Count > 0)
