@@ -52,7 +52,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
             else
             {
                 var users = await this.roleManager.GetUsers<TRoleAssignments>(query);
-                query.SkipTo(users.Total);
                 return GetUserCollection(query, users.Total, users.Results);
             }
         }

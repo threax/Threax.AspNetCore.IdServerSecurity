@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.0.0</Version>
+    <Version>4.0.1-pre1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -10,7 +10,8 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Requires Threax.AspNetCore.Halcyon.Ext version 10.0.0 or greater. Fixes compilation issue.</PackageReleaseNotes>
+    <PackageReleaseNotes>4.0.1 - Fixed bug where pages were not handled correctly when listing users.
+Requires Threax.AspNetCore.Halcyon.Ext version 10.0.0 or greater. Fixes compilation issue.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

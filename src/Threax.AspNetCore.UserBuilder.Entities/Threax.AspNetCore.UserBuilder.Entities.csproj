@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.0.0</Version>
+    <Version>4.0.1-pre1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -10,7 +10,8 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Removed dependency on sql server library. Refactored AddAuthorizationDatabase the client is now responsible for calling UseSqlServer with the appropriate server themselves.
+    <PackageReleaseNotes>4.0.1 - Fixed bug where pages were not handled correctly when listing users.
+Removed dependency on sql server library. Refactored AddAuthorizationDatabase the client is now responsible for calling UseSqlServer with the appropriate server themselves.
 This is commonly fixed by changing your call to services.AddAuthorizationDatabase&lt;AppDbContext&gt; call to
             services.AddAuthorizationDatabase&lt;AppDbContext&gt;()
                     .AddDbContextPool&lt;AppDbContext&gt;(o =&gt;

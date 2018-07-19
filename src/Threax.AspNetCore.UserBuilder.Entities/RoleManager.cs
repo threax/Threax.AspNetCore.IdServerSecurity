@@ -121,19 +121,10 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             where TRoleAssignmentType : IRoleAssignments, new()
         {
             var users = query.Create(userRepo.GetUsers());
-
             var total = await users.CountAsync();
-            var skip = query.Offset * query.Limit;
-            if(skip > total)
-            {
-                skip = total;
-            }
-            if(skip + query.Limit > total)
-            {
-                total -= skip;
-            }
+            users = users.Skip(query.SkipTo(total)).Take(query.Limit);
 
-            var results = await users.Skip(skip).Take(query.Limit).ToListAsync();
+            var results = await users.ToListAsync();
             return new SystemUserRoleInfo<TRoleAssignmentType>()
             {
                 Total = total,
