@@ -80,6 +80,13 @@ namespace Threax.AspNetCore.IdServerAuth
         public String AccessDeniedPath { get; set; }
 
         /// <summary>
+        /// The amount of time to allow before and after the start and end times
+        /// to still accept bearer tokens and cookies as valid.
+        /// Default is 5.
+        /// </summary>
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromSeconds(5);
+
+        /// <summary>
         /// Customize the jwt bearer options, this is called after the automatic configuration, so you can override any
         /// settings you need. This is only called if your app supports bearer auth.
         /// </summary>

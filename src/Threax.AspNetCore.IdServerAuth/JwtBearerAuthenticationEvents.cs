@@ -11,12 +11,14 @@ namespace Threax.AspNetCore.IdServerAuth
     public class JwtBearerAuthenticationEvents
     {
         String securityTokenAlgo;
+        TimeSpan clockSkew;
 
         public Func<AuthorizeUserContext, Task> OnAuthorizeUser { get; set; }
 
-        public JwtBearerAuthenticationEvents(String securityTokenAlgo)
+        public JwtBearerAuthenticationEvents(String securityTokenAlgo, TimeSpan clockSkew)
         {
             this.securityTokenAlgo = securityTokenAlgo;
+            this.clockSkew = clockSkew;
         }
 
         public async Task TokenValidated(TokenValidatedContext context)
@@ -39,10 +41,10 @@ namespace Threax.AspNetCore.IdServerAuth
             }
 
             var now = DateTime.UtcNow;
-            if (now < jwt.ValidFrom || now > jwt.ValidTo)
+            if (now < (jwt.ValidFrom - clockSkew) || now > (jwt.ValidTo + clockSkew))
             {
                 //Check dates, return unauthorized if they do not match
-                context.Fail("Dates not valid.");
+                context.Fail($"Dates not valid. Time is {now} token valid from: {jwt.ValidFrom} to: {jwt.ValidTo}");
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
 

@@ -97,6 +97,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.ValidateAudience = true;
                     o.ValidAudiences = new String[] { options.AppOptions.Scope };
                     o.ValidateLifetime = true;
+                    o.ClockSkew = options.ClockSkew;
                     o.Events = new JwtCookieEvents()
                     {
                         OnValidatePrincipal = c => c.BuildUserWithRequestServices()
@@ -136,7 +137,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (options.ActAsApi)
             {
-                var bearerEvents = new JwtBearerAuthenticationEvents(Microsoft.IdentityModel.Tokens.SecurityAlgorithms.RsaSha256)
+                var bearerEvents = new JwtBearerAuthenticationEvents(Microsoft.IdentityModel.Tokens.SecurityAlgorithms.RsaSha256, options.ClockSkew)
                 {
                     OnAuthorizeUser = c => c.BuildUserWithRequestServices()
                 };
