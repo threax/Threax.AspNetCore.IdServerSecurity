@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="10.0.1" />
+    <PackageReference Include="Threax.AspNetCore.Models" Version="6.0.1" />
+    <PackageReference Include="Threax.AspNetCore.UserBuilder" Version="3.2.0" />
+    <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.0.1" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="5.0.2" />
+  </ItemGroup>
+
+</Project>

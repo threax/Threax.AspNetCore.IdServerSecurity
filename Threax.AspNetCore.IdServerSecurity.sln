@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.Xsrf", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.IdServerMetadata.Client", "src\Threax.AspNetCore.IdServerMetadata.Client\Threax.AspNetCore.IdServerMetadata.Client.csproj", "{586D6FC6-D65A-4935-83E9-BC40D49A392D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threax.AspNetCore.UserSearch.Mvc", "src\Threax.AspNetCore.UserSearch.Mvc\Threax.AspNetCore.UserSearch.Mvc.csproj", "{50E8E30F-32B2-4DB8-8634-994A458F0C17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{E823A0CF-822F-4D98-930B-3299A7FBBB26} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{449BA9CD-A20C-4420-BC55-B54DCE2B263C} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
+		{50E8E30F-32B2-4DB8-8634-994A458F0C17} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {432C63C5-4BBE-4AE4-8963-48D7FCCBA395}
