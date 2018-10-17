@@ -6,13 +6,13 @@
     <IncludeSource>True</IncludeSource>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.0-pre1</Version>
+    <Version>0.0.0-pre2</Version>
     <PackageReleaseNotes>Initial preview release, has skeleton of what is needed, but cannot actually search users.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="10.0.1" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="12.0.0" />
     <PackageReference Include="Threax.AspNetCore.Models" Version="6.0.1" />
     <PackageReference Include="Threax.AspNetCore.UserBuilder" Version="3.2.0" />
     <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.0.1" />
