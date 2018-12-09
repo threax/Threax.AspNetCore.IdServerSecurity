@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
         public static IMvcBuilder AddUserSearchMvc(this IMvcBuilder builder)
         {
             builder.Services.TryAddScoped<AppMapper>();
-            //builder.Services.TryAddScoped<IUserSearchService, UserSearchService>();
+            builder.Services.TryAddScoped<IUserSearchService, UserSearchService>();
 
             return builder;
         }

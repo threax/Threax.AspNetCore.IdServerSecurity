@@ -5,6 +5,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.0.0-pre4</Version>
     <PackageReleaseNotes>Initial preview release, has skeleton of what is needed, but cannot actually search users.</PackageReleaseNotes>
@@ -18,6 +19,7 @@
     <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.0.1" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="5.0.2" />
+    <PackageReference Include="Threax.IdServer.Client" Version="1.0.0-pre3" />
   </ItemGroup>
 
 </Project>
