@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.Models;
 
-namespace Spc.AspNetCore.Users.Mvc.InputModels
+namespace Threax.AspNetCore.UserSearchMvc.InputModels
 {
     [HalModel]
     public class UserSearchQuery : PagedCollectionQuery

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Spc.AspNetCore.Users.Mvc.InputModels;
-using Spc.AspNetCore.Users.Mvc.Services;
-using Spc.AspNetCore.Users.Mvc.ViewModels;
+using Threax.AspNetCore.UserSearchMvc.InputModels;
+using Threax.AspNetCore.UserSearchMvc.Services;
+using Threax.AspNetCore.UserSearchMvc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.UserBuilder.Entities;
 
-namespace Spc.AspNetCore.Users.Mvc.Controllers
+namespace Threax.AspNetCore.UserSearchMvc.Controllers
 {
     [Route("api/[controller]")]
     [ResponseCache(NoStore = true)]

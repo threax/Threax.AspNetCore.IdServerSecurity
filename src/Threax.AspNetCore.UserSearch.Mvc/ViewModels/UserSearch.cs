@@ -1,5 +1,5 @@
 ﻿using Halcyon.HAL.Attributes;
-using Spc.AspNetCore.Users.Mvc.Controllers;
+using Threax.AspNetCore.UserSearchMvc.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.Models;
 
-namespace Spc.AspNetCore.Users.Mvc.ViewModels
+namespace Threax.AspNetCore.UserSearchMvc.ViewModels
 {
     [HalModel]
     [HalSelfActionLink(typeof(UserSearchController), nameof(UserSearchController.Get))]

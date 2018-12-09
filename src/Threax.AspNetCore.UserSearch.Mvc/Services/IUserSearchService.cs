@@ -1,9 +1,9 @@
-﻿using Spc.AspNetCore.Users.Mvc.InputModels;
-using Spc.AspNetCore.Users.Mvc.ViewModels;
+﻿using Threax.AspNetCore.UserSearchMvc.InputModels;
+using Threax.AspNetCore.UserSearchMvc.ViewModels;
 using System;
 using System.Threading.Tasks;
 
-namespace Spc.AspNetCore.Users.Mvc.Services
+namespace Threax.AspNetCore.UserSearchMvc.Services
 {
     public interface IUserSearchService
     {

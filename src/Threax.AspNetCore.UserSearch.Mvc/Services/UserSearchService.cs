@@ -1,13 +1,13 @@
-﻿using Spc.AspNetCore.Users.Mvc.InputModels;
-using Spc.AspNetCore.Users.Mvc.Services;
-using Spc.AspNetCore.Users.Mvc.ViewModels;
+﻿using Threax.AspNetCore.UserSearchMvc.InputModels;
+using Threax.AspNetCore.UserSearchMvc.Services;
+using Threax.AspNetCore.UserSearchMvc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spc.AspNetCore.Users.Mvc.Services
+namespace Threax.AspNetCore.UserSearchMvc.Services
 {
     public class UserSearchService : IUserSearchService
     {
@@ -18,7 +18,7 @@ namespace Spc.AspNetCore.Users.Mvc.Services
             this.injector = injector;
         }
 
-        public async Task<Spc.AspNetCore.Users.Mvc.ViewModels.UserSearch> Get(Guid userId)
+        public async Task<Threax.AspNetCore.UserSearchMvc.ViewModels.UserSearch> Get(Guid userId)
         {
             var entry = await injector.Load();
             var users = await entry.ListIdServerUsers(new Threax.IdServer.Client.IdServerUserQuery()
