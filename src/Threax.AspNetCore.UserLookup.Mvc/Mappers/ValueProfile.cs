@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Threax.AspNetCore.UserSearchMvc.ViewModels;
+using Threax.AspNetCore.UserLookup.Mvc.ViewModels;
 
 namespace Threax.AspNetCore.UserLookup.Mvc.Mappers
 {

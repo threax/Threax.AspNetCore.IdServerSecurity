@@ -1,6 +1,6 @@
 ﻿using Halcyon.HAL.Attributes;
-using Threax.AspNetCore.UserSearchMvc.Controllers;
-using Threax.AspNetCore.UserSearchMvc.InputModels;
+using Threax.AspNetCore.UserLookup.Mvc.Controllers;
+using Threax.AspNetCore.UserLookup.Mvc.InputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.UserLookup;
 
-namespace Threax.AspNetCore.UserSearchMvc.ViewModels
+namespace Threax.AspNetCore.UserLookup.Mvc.ViewModels
 {
     [HalModel]
     [HalSelfActionLink(typeof(UserSearchController), nameof(UserSearchController.List))]

@@ -7,7 +7,7 @@ using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.Models;
 using Threax.AspNetCore.UserLookup;
 
-namespace Threax.AspNetCore.UserSearchMvc.InputModels
+namespace Threax.AspNetCore.UserLookup.Mvc.InputModels
 {
     [HalModel]
     public class UserSearchQuery : PagedCollectionQuery, IUserSearchQuery

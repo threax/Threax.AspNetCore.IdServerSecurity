@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Threax.AspNetCore.UserSearchMvc.InputModels;
-using Threax.AspNetCore.UserSearchMvc.ViewModels;
+using Threax.AspNetCore.UserLookup.Mvc.InputModels;
+using Threax.AspNetCore.UserLookup.Mvc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using Threax.AspNetCore.UserBuilder.Entities;
 using Threax.AspNetCore.UserLookup;
 using Threax.AspNetCore.UserLookup.Mvc.Mappers;
 
-namespace Threax.AspNetCore.UserSearchMvc.Controllers
+namespace Threax.AspNetCore.UserLookup.Mvc.Controllers
 {
     [Route("api/[controller]")]
     [ResponseCache(NoStore = true)]
