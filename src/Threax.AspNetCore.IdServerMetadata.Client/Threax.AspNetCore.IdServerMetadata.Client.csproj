@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,20 +7,12 @@
     <IncludeSource>True</IncludeSource>
     <Authors>Andrew Piper</Authors>
     <Company>Andrew Piper</Company>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <Version>1.1.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
-    <DocumentationFile>bin\Debug\netstandard2.0\Threax.AspNetCore.IdServerMetadata.Client.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
-    <DocumentationFile>bin\Release\netstandard2.0\Threax.AspNetCore.IdServerMetadata.Client.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

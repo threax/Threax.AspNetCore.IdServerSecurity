@@ -6,6 +6,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
     <Authors>Andrew Piper</Authors>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
@@ -22,16 +24,6 @@ This is commonly fixed by changing your call to services.AddAuthorizationDatabas
                         });
                     });</PackageReleaseNotes>
     <Description>Entity framework connections for the user builder.</Description>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Threax.AspNetCore.UserBuilder.Entities.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Threax.AspNetCore.UserBuilder.Entities.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

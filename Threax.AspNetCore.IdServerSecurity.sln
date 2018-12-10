@@ -27,7 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.Xsrf", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.IdServerMetadata.Client", "src\Threax.AspNetCore.IdServerMetadata.Client\Threax.AspNetCore.IdServerMetadata.Client.csproj", "{586D6FC6-D65A-4935-83E9-BC40D49A392D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threax.AspNetCore.UserSearch.Mvc", "src\Threax.AspNetCore.UserSearch.Mvc\Threax.AspNetCore.UserSearch.Mvc.csproj", "{50E8E30F-32B2-4DB8-8634-994A458F0C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserSearch.Mvc", "src\Threax.AspNetCore.UserSearch.Mvc\Threax.AspNetCore.UserSearch.Mvc.csproj", "{50E8E30F-32B2-4DB8-8634-994A458F0C17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserLookup.Mvc", "src\Threax.AspNetCore.UserLookup.Mvc\Threax.AspNetCore.UserLookup.Mvc.csproj", "{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserLookup.IdServer", "src\Threax.AspNetCore.UserLookup.IdServer\Threax.AspNetCore.UserLookup.IdServer.csproj", "{DA174E7B-CAF7-4CA7-833B-EF961DDD7431}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserLookup", "src\Threax.AspNetCore.UserLookup\Threax.AspNetCore.UserLookup.csproj", "{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +85,18 @@ Global
 		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50E8E30F-32B2-4DB8-8634-994A458F0C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +113,9 @@ Global
 		{449BA9CD-A20C-4420-BC55-B54DCE2B263C} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{50E8E30F-32B2-4DB8-8634-994A458F0C17} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
+		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
+		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
+		{4A4AB78D-CE4C-4DEA-A9DA-6B27937968A1} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {432C63C5-4BBE-4AE4-8963-48D7FCCBA395}

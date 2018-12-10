@@ -6,21 +6,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
     <Authors>Andrew Piper</Authors>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
     <PackageReleaseNotes>Updated reference to Threax.AspNetCore.IdServerMetadata, no longer requires Threax.AspNetCore.Halcyon.Ext.</PackageReleaseNotes>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Threax.AspNetCore.IdServerAuth.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Threax.AspNetCore.IdServerAuth.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1509;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
