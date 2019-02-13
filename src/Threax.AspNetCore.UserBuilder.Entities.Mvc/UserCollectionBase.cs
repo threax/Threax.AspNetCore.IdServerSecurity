@@ -5,7 +5,7 @@ using Threax.AspNetCore.Halcyon.Ext;
 
 namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
 {
-    public class UserCollectionBase<TRoleAssignments, TRoleQuery> : PagedCollectionView<TRoleAssignments>
+    public class UserCollectionBase<TRoleAssignments, TRoleQuery> : PagedCollectionViewWithQuery<TRoleAssignments, TRoleQuery>
         where TRoleAssignments : IRoleAssignments, new()
         where TRoleQuery : RolesQuery
     {
@@ -14,26 +14,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         public UserCollectionBase(TRoleQuery query, int total, IEnumerable<TRoleAssignments> items) : base(query, total, items)
         {
             this.rolesQuery = query;
-        }
-
-        protected override void AddCustomQuery(string rel, RequestDataBuilder query)
-        {
-            base.AddCustomQuery(rel, query);
-            if(rolesQuery.UserId != null && rolesQuery.UserId.Count > 0)
-            {
-                foreach(var id in rolesQuery.UserId)
-                {
-                    query.AppendItem("userId", id.ToString());
-                }
-            }
-        }
-
-        protected TRoleQuery RolesQuery
-        {
-            get
-            {
-                return rolesQuery;
-            }
         }
     }
 

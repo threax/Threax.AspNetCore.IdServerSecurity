@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Threax.AspNetCore.Halcyon.Ext;
+using Threax.AspNetCore.Models;
 
 namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
 {
@@ -16,12 +17,19 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         public List<Guid> UserId { get; set; } = new List<Guid>();
 
         /// <summary>
-        /// A name for the user. Used only as a reference, will be added to the result if the user is not found.
+        /// Search by user name.
         /// </summary>
+        [UiSearch]
         public String Name { get; set; }
 
         public virtual IQueryable<User> Create(IQueryable<User> query)
         {
+            if(Name != null)
+            {
+                query = query.Where(i => i.Name.Contains(Name));
+            }
+
+            query = query.OrderBy(i => i.Name);
             return query;
         }
     }
