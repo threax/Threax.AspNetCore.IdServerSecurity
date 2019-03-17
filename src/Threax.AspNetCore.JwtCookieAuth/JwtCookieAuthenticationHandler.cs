@@ -72,12 +72,13 @@ namespace Threax.AspNetCore.JwtCookieAuth
                     return AuthenticateResult.Fail("No refresh token.");
                 }
 
-                var client = new TokenClient(Options.Authority + "/connect/token", Options.ClientId, Options.ClientSecret);
+                var connectUri = new Uri(new Uri(Options.Authority), "/connect/token");
+                var client = new TokenClient(connectUri.AbsoluteUri, Options.ClientId, Options.ClientSecret);
                 var response = await client.RequestRefreshTokenAsync(refreshToken);
                 if (response.IsError)
                 {
                     setupUserClaims = false;
-                    return AuthenticateResult.Fail("Could not refresh access token.");
+                    return AuthenticateResult.Fail($"Could not refresh access token from {connectUri.AbsoluteUri}. Http Status Code: {response.HttpStatusCode} Message: {response.Error}");
                 }
                 else
                 {
