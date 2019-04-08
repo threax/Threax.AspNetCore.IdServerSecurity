@@ -54,7 +54,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
                         this.tokenValidationParameters = new TokenValidationParameters
                         {
                             ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = config.SigningKeys.FirstOrDefault(),
+                            IssuerSigningKeys = config.SigningKeys,
 
                             ValidateIssuer = true,
                             ValidIssuer = config.Issuer,

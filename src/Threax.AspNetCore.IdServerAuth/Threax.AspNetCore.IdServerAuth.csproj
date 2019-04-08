@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.10.0</Version>
+    <Version>2.10.1-pre01</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Updated reference to Threax.AspNetCore.IdServerMetadata, no longer requires Threax.AspNetCore.Halcyon.Ext.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated reference to Threax.AspNetCore.JwtCookieAuth.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
