@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using System;
+using System.Linq;
 using System.Reflection;
 using Threax.AspNetCore.UserLookup;
 using Threax.AspNetCore.UserLookup.Mvc.Mappers;
-using Threax.AspNetCore.UserLookup.Mvc.InputModels;
-using Threax.AspNetCore.UserLookup.Mvc.ViewModels;
 
 namespace Microsoft.Extensions.DependencyInjection.Extensions
 {
@@ -15,7 +14,12 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 //Auto find profile classes
-                cfg.AddProfiles(typeof(AppMapper).GetTypeInfo().Assembly);
+                var profiles = typeof(ServiceExtensions).GetTypeInfo().Assembly.GetTypes()
+                    .Where(t => t.IsSubclassOf(typeof(Profile)))
+                    .Select(i => Activator.CreateInstance(i) as Profile)
+                    .ToList();
+
+                cfg.AddProfiles(profiles);
             });
 
             builder.Services.AddScoped<AppMapper>(s => new AppMapper(mapperConfig.CreateMapper(s.GetRequiredService)));
