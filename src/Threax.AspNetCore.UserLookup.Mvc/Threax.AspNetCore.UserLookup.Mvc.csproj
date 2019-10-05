@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="12.8.0-pre01" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="12.8.0-pre02" />
     <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.1.0-pre01" />
   </ItemGroup>
 
