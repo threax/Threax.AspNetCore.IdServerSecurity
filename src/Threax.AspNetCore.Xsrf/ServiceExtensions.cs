@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Antiforgery.Internal;
+﻿using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Threax.AspNetCore.AccessTokens;
 using Threax.AspNetCore.Xsrf;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -16,7 +15,6 @@ namespace Microsoft.Extensions.DependencyInjection
             configureOptions?.Invoke(options);
 
             services.AddScoped<IXsrfTokenCookieManager, XsrfTokenCookieManager>();
-            services.AddSingleton<IClaimUidExtractor, ClaimUidExtractor>();
             services.AddSingleton(options);
             services.AddAntiforgery(o =>
             {
