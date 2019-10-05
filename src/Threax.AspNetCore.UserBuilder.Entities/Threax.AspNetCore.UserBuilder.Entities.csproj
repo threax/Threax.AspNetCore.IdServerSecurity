@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.0.1</Version>
+    <TargetFrameworks>netcoreapp3.0;netstandard2.0</TargetFrameworks>
+    <Version>4.1.0-pre01</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -12,21 +12,18 @@
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>4.0.1 - Fixed bug where pages were not handled correctly when listing users.
-Removed dependency on sql server library. Refactored AddAuthorizationDatabase the client is now responsible for calling UseSqlServer with the appropriate server themselves.
-This is commonly fixed by changing your call to services.AddAuthorizationDatabase&lt;AppDbContext&gt; call to
-            services.AddAuthorizationDatabase&lt;AppDbContext&gt;()
-                    .AddDbContextPool&lt;AppDbContext&gt;(o =&gt;
-                    {
-                        o.UseSqlServer(connectionString, options =&gt;
-                        {
-                            options.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name);
-                        });
-                    });</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to .net core 3.0.</PackageReleaseNotes>
     <Description>Entity framework connections for the user builder.</Description>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.0" />
   </ItemGroup>
