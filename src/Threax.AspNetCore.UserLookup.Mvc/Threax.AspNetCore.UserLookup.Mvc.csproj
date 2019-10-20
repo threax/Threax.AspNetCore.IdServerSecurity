@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netstandard2.0</TargetFrameworks>
-    <Version>2.1.0-pre03</Version>
+    <Version>2.1.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1705;1509;1591</NoWarn>
-    <PackageReleaseNotes>Version 2.0.0 updates to AutoMapper version 9.0.0 and changes how profiles are added. No other changes made.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .net core 3.0.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="12.8.0-pre02" />
-    <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.1.0-pre02" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="12.8.0" />
+    <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
