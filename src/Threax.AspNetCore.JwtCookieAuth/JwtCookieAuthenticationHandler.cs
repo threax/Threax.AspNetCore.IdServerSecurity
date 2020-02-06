@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Threax.AspNetCore.AuthCore;
+using Threax.SharedHttpClient;
 
 namespace Threax.AspNetCore.JwtCookieAuth
 {
@@ -22,11 +23,13 @@ namespace Threax.AspNetCore.JwtCookieAuth
     {
         private ITokenValidationParametersProvider tokenValidationParametersProvider;
         private String responseRedirectPath = null;
+        private ISharedHttpClient sharedHttpClient;
 
-        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider)
+        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider, ISharedHttpClient sharedHttpClient)
             : base(options, logger, encoder, clock)
         {
             this.tokenValidationParametersProvider = tokenValidationParametersProvider;
+            this.sharedHttpClient = sharedHttpClient;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -73,7 +76,12 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 }
 
                 var connectUri = new Uri(new Uri(Options.Authority), "/connect/token");
-                var client = new TokenClient(connectUri.AbsoluteUri, Options.ClientId, Options.ClientSecret);
+                var client = new TokenClient(sharedHttpClient.Client, new TokenClientOptions()
+                {
+                    Address = connectUri.AbsoluteUri,
+                    ClientId = Options.ClientId,
+                    ClientSecret = Options.ClientSecret
+                });
                 var response = await client.RequestRefreshTokenAsync(refreshToken);
                 if (response.IsError)
                 {

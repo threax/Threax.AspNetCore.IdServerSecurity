@@ -11,6 +11,7 @@ using Threax.AspNetCore.AuthCore;
 using Threax.AspNetCore.IdServerAuth;
 using Threax.AspNetCore.JwtCookieAuth;
 using Threax.AspNetCore.UserBuilder;
+using Threax.SharedHttpClient;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -83,6 +84,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.DefaultScheme = options.DefaultScheme;
                 }
             });
+
+            services.AddThreaxSharedHttpClient();
 
             if (options.ActAsClient)
             {
