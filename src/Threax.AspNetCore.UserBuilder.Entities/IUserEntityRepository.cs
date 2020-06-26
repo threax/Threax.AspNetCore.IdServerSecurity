@@ -16,7 +16,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
         Task UpdateUser(User user, IEnumerable<Tuple<String, bool>> roles);
 
-        IQueryable<User> GetUsers();
+        IQueryable<User> GetUsers(IRoleQuery query);
 
         Task DeleteUser(Guid userId);
     }

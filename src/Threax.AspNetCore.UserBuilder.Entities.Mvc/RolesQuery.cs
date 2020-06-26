@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Threax.AspNetCore.Halcyon.Ext;
 using Threax.AspNetCore.Models;
 
@@ -32,9 +31,11 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
         [UiOrder(int.MaxValue, 0)]
         public bool SuperAdmin { get; set; }
 
-        public virtual IQueryable<User> Create(IQueryable<User> query)
+        public virtual IQueryable<User> Create(UsersDbContext usersDbContext)
         {
-            if(Name != null)
+            IQueryable<User> query = usersDbContext.Users;
+
+            if (Name != null)
             {
                 query = query.Where(i => i.Name.Contains(Name));
             }
@@ -45,7 +46,15 @@ namespace Threax.AspNetCore.UserBuilder.Entities.Mvc
 
             if (roleFilter.Any())
             {
-                query = query.Where(i => i.Roles.Select(j => j.Role.Name).Intersect(roleFilter).Any());
+                query = query
+                    .Join(usersDbContext.UserRoles, o => o.UserId, i => i.UserId, 
+                    (o, i) => new {
+                        User = o,
+                        Role = i
+                    })
+                    .Where(i => roleFilter.Contains(i.Role.Role.Name))
+                    .Select(i => i.User)
+                    .Distinct();
             }
 
             query = query.OrderBy(i => i.Name);

@@ -11,7 +11,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         
         int Limit { get; set; }
 
-        IQueryable<User> Create(IQueryable<User> query);
+        IQueryable<User> Create(UsersDbContext userDbContext);
     }
 
     public static class IRoleQueryExtensions

@@ -83,9 +83,9 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Get all users in this repository.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<User> GetUsers()
+        public IQueryable<User> GetUsers(IRoleQuery query)
         {
-            return authorizedUsersDb.Users;
+            return query.Create(authorizedUsersDb);
         }
 
         /// <summary>
