@@ -90,5 +90,15 @@ namespace Threax.AspNetCore.JwtCookieAuth
         /// Gets or sets the clock skew to apply when validating a time. Default is 5 seconds.
         /// </summary>
         public TimeSpan ClockSkew { get; set; } = TimeSpan.FromSeconds(5);
+
+        /// <summary>
+        /// Set this to true to make bearer cookies http only. Default: true.
+        /// </summary>
+        public bool BearerHttpOnly { get; set; } = true;
+
+        /// <summary>
+        /// Set this to true to make refresh cookies http only. Default: true.
+        /// </summary>
+        public bool RefreshHttpOnly { get; set; } = true;
     }
 }

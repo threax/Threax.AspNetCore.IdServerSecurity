@@ -161,14 +161,14 @@ namespace Threax.AspNetCore.JwtCookieAuth
             Response.Cookies.Delete(BearerCookieName, new CookieOptions()
             {
                 Secure = true,
-                HttpOnly = true,
+                HttpOnly = Options.BearerHttpOnly,
                 Path = cookiePath
             });
 
             Response.Cookies.Delete(RefreshCookieName, new CookieOptions()
             {
                 Secure = true,
-                HttpOnly = true,
+                HttpOnly = Options.RefreshHttpOnly,
                 Path = cookiePath
             });
         }
@@ -183,7 +183,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
             Response.Cookies.Append(BearerCookieName, accessToken, new CookieOptions()
             {
                 Secure = true,
-                HttpOnly = true,
+                HttpOnly = Options.BearerHttpOnly,
                 Path = cookiePath,
                 Expires = expires
             });
@@ -191,7 +191,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
             Response.Cookies.Append(RefreshCookieName, refreshToken, new CookieOptions()
             {
                 Secure = true,
-                HttpOnly = true,
+                HttpOnly = Options.RefreshHttpOnly,
                 Path = cookiePath,
                 Expires = expires
             });
