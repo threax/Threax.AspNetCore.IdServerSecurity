@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Threax.AspNetCore.AccessTokens;
 using Threax.AspNetCore.AuthCore;
 using Threax.AspNetCore.IdServerAuth;
 using Threax.AspNetCore.JwtCookieAuth;
@@ -60,15 +56,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     throw new InvalidOperationException("You must provide a client id for the app to use it as a client.");
                 }
-
-                services.AddConventionalXsrf(o =>
-                {
-                    o.AntiforgeryCookie.Name = options.AppOptions.ClientId + ".Antiforgery";
-                    o.AntiforgeryCookie.Path = options.CookiePath;
-
-                    o.TokenCookie.Name = options.AppOptions.ClientId + ".RequestToken";
-                    o.TokenCookie.Path = options.CookiePath;
-                });
             }
 
             var authBuilder = services.AddAuthentication(o =>
@@ -203,15 +190,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.CreateConventionalClientCredentials(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.ClientCredentialsScopes);
                 }
             });
-
-            if (options.ActAsClient && options.EnableAccessTokenMiddleware)
-            {
-                builder.AddAccessTokenController(o =>
-                {
-                    o.AuthenticationScheme = AuthCoreSchemes.Cookies;
-                    o.ValidateAntiforgery = options.ValidateAntiforgery;
-                });
-            }
 
             return builder;
         }

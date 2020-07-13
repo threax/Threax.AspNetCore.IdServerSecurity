@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Threax.AspNetCore.JwtCookieAuth;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Threax.AspNetCore.AccessTokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
+using Threax.AspNetCore.JwtCookieAuth;
 
 namespace Threax.AspNetCore.IdServerAuth
 {
@@ -15,17 +12,6 @@ namespace Threax.AspNetCore.IdServerAuth
         /// The defaults for the other properties should be correct for most applications.
         /// </summary>
         public IdServerAuthAppOptions AppOptions { get; set; }
-
-        /// <summary>
-        /// Set this to true (default) to enable the access token middleware to allow this application to return
-        /// access tokens.
-        /// </summary>
-        public bool EnableAccessTokenMiddleware { get; set; } = true;
-
-        /// <summary>
-        /// The options for access tokens, used if EnableAccessTokenMiddleware is true.
-        /// </summary>
-        public AccessTokenOptions AccessTokenOptions { get; set; } = new AccessTokenOptions();
 
         /// <summary>
         /// Set this to true (default) to enable id server metadata.

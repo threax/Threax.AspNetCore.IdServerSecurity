@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBBC3E56-D59A-447E-8021-DA2D17B6AD50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7333F03-3D9B-434C-84DE-B27FDD3A3743}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.AccessTokens", "src\Threax.AspNetCore.AccessTokens\Threax.AspNetCore.AccessTokens.csproj", "{07A002DC-2069-4EB9-9C7A-CD52988EA7E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.AuthCore", "src\Threax.AspNetCore.AuthCore\Threax.AspNetCore.AuthCore.csproj", "{D790892C-D130-4310-B036-3EDBECFDD943}"
 EndProject
@@ -23,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserBuild
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserBuilder.Entities.Mvc", "src\Threax.AspNetCore.UserBuilder.Entities.Mvc\Threax.AspNetCore.UserBuilder.Entities.Mvc.csproj", "{E823A0CF-822F-4D98-930B-3299A7FBBB26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.Xsrf", "src\Threax.AspNetCore.Xsrf\Threax.AspNetCore.Xsrf.csproj", "{449BA9CD-A20C-4420-BC55-B54DCE2B263C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.IdServerMetadata.Client", "src\Threax.AspNetCore.IdServerMetadata.Client\Threax.AspNetCore.IdServerMetadata.Client.csproj", "{586D6FC6-D65A-4935-83E9-BC40D49A392D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threax.AspNetCore.UserLookup.Mvc", "src\Threax.AspNetCore.UserLookup.Mvc\Threax.AspNetCore.UserLookup.Mvc.csproj", "{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA}"
@@ -39,10 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{07A002DC-2069-4EB9-9C7A-CD52988EA7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07A002DC-2069-4EB9-9C7A-CD52988EA7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07A002DC-2069-4EB9-9C7A-CD52988EA7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07A002DC-2069-4EB9-9C7A-CD52988EA7E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D790892C-D130-4310-B036-3EDBECFDD943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D790892C-D130-4310-B036-3EDBECFDD943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D790892C-D130-4310-B036-3EDBECFDD943}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,10 +63,6 @@ Global
 		{E823A0CF-822F-4D98-930B-3299A7FBBB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E823A0CF-822F-4D98-930B-3299A7FBBB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E823A0CF-822F-4D98-930B-3299A7FBBB26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{449BA9CD-A20C-4420-BC55-B54DCE2B263C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{449BA9CD-A20C-4420-BC55-B54DCE2B263C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{449BA9CD-A20C-4420-BC55-B54DCE2B263C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{449BA9CD-A20C-4420-BC55-B54DCE2B263C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -96,7 +84,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{07A002DC-2069-4EB9-9C7A-CD52988EA7E9} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{D790892C-D130-4310-B036-3EDBECFDD943} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{A0025BB3-B13E-4A5E-8793-FE7E3C9A0FC3} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{CCC02639-22C8-4EBA-B6B2-0EFA872B0121} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
@@ -104,7 +91,6 @@ Global
 		{296311F9-941E-464E-B0BB-25DD9BA8E74D} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{89717A46-7BB6-4B4B-810C-4BA3211D02B1} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{E823A0CF-822F-4D98-930B-3299A7FBBB26} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
-		{449BA9CD-A20C-4420-BC55-B54DCE2B263C} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{586D6FC6-D65A-4935-83E9-BC40D49A392D} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{55C2584C-E3AA-4C18-80A3-89B2D5F1A1DA} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
 		{DA174E7B-CAF7-4CA7-833B-EF961DDD7431} = {EBBC3E56-D59A-447E-8021-DA2D17B6AD50}
