@@ -27,9 +27,13 @@ namespace Threax.AspNetCore.AccessTokens
                 return new UnauthorizedResult();
             }
 
-            //Validate antiforgery, have to set user manually
+            //Have to set user manually
             HttpContext.User = result.Ticket.Principal;
-            await antiforgery.ValidateRequestAsync(HttpContext);
+
+            if (options.ValidateAntiforgery)
+            {
+                await antiforgery.ValidateRequestAsync(HttpContext);
+            }
 
             //Won't get here unless everything was valid
             return this.Json(new AccessTokenModel

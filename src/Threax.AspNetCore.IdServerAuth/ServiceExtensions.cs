@@ -209,6 +209,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 builder.AddAccessTokenController(o =>
                 {
                     o.AuthenticationScheme = AuthCoreSchemes.Cookies;
+                    o.ValidateAntiforgery = options.ValidateAntiforgery;
                 });
             }
 

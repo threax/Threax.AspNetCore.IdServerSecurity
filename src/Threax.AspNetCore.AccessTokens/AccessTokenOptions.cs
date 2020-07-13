@@ -15,5 +15,10 @@ namespace Threax.AspNetCore.AccessTokens
         /// The name of the authentication scheme to use to get the access tokens.
         /// </summary>
         public string AuthenticationScheme { get; set; }
+
+        /// <summary>
+        /// Set this to true to validate the antiforgery tokens. Default: true.
+        /// </summary>
+        public bool ValidateAntiforgery { get; set; } = true;
     }
 }
