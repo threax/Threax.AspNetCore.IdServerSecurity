@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netstandard2.0</TargetFrameworks>
-    <Version>4.0.0</Version>
+    <Version>4.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -11,7 +11,8 @@
     <Authors>Andrew Piper</Authors>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
-    <PackageReleaseNotes>Removed xsrf token stuff. It wasn't really doing anything except making everything more complicated. It would not prevent any js from getting the token since it could just do the same steps. Will have to rely on other mechanisms, like csp, to manage this.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed xsrf token stuff. It wasn't really doing anything except making everything more complicated. It would not prevent any js from getting the token since it could just do the same steps. Will have to rely on other mechanisms, like csp, to manage this.
+4.0.1 - Removed dead property ValidateAntiforgery.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

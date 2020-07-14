@@ -89,10 +89,5 @@ namespace Threax.AspNetCore.IdServerAuth
         /// This is only called if your app supports cookie auth.
         /// </summary>
         public Action<OpenIdConnectOptions> CustomizeOpenIdConnect { get; set; }
-
-        /// <summary>
-        /// Enable antiforgery tokens when getting access tokens. Default: true.
-        /// </summary>
-        public bool ValidateAntiforgery { get; set; } = true;
     }
 }
