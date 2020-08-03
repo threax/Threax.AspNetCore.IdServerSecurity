@@ -19,13 +19,6 @@ namespace Threax.AspNetCore.IdServerAuth
         public bool EnableIdServerMetadata { get; set; } = true;
 
         /// <summary>
-        /// Set this to an action to configure the jwt options when loading the id server metadata.
-        /// Only does something if EnableIdServerMetadata is true. A good deal of this will be auto
-        /// configured, but you might want to modify things like the audience.
-        /// </summary>
-        public Action<JwtBearerOptions> ConfigureIdServerMetadataJwtOptions { get; set; }
-
-        /// <summary>
         /// The path to use for any auth cookies created.
         /// This can be null, but you should set it to your app's base path.
         /// </summary>

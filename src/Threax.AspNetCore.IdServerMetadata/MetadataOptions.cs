@@ -8,6 +8,11 @@ namespace Threax.AspNetCore.IdServerMetadata
     public class MetadataOptions
     {
         /// <summary>
+        /// This must be set to true to enable the metadata. Default: false
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
         /// The resource metadata settings.
         /// </summary>
         public ApiResourceMetadata Resource { get; set; }

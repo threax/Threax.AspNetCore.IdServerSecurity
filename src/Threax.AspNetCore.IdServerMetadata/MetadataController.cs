@@ -9,7 +9,6 @@ using System.Text;
 namespace Threax.AspNetCore.IdServerMetadata
 {
     [Route("[controller]/[action]")]
-    [Authorize(AuthenticationSchemes = MetadataConstants.AuthenticationScheme)]
     public class MetadataController : Controller
     {
         private MetadataOptions options;
@@ -17,6 +16,11 @@ namespace Threax.AspNetCore.IdServerMetadata
         public MetadataController(MetadataOptions options)
         {
             this.options = options;
+
+            if (!options.Enabled)
+            {
+                throw new InvalidOperationException("Metadata controller is not enabled.");
+            }
         }
 
         [HttpGet]

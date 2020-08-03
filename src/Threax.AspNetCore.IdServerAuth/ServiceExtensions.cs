@@ -150,15 +150,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
             }
 
-            if (options.EnableIdServerMetadata)
-            {
-                authBuilder.AddIdServerMetadataAuth(o =>
-                {
-                    o.Authority = options.AppOptions.Authority;
-                    options.ConfigureIdServerMetadataJwtOptions?.Invoke(o);
-                });
-            }
-
             return services;
         }
 
@@ -175,21 +166,25 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException("You must call AddIdServerAuthentication before calling AddIdServerMetadata so the options will be setup.");
             }
 
-            builder.AddIdServerMetadata(o =>
+            if (options.EnableIdServerMetadata)
             {
-                if (options.ActAsApi)
+                builder.AddIdServerMetadata(o =>
                 {
-                    o.CreateConventionalResource(options.AppOptions.Scope, options.AppOptions.DisplayName);
-                }
-                if (options.ActAsClient)
-                {
-                    o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath, options.AppOptions.AdditionalScopes);
-                }
-                if (options.CreateClientCredentialsMetadata)
-                {
-                    o.CreateConventionalClientCredentials(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.ClientCredentialsScopes);
-                }
-            });
+                    o.Enabled = options.EnableIdServerMetadata;
+                    if (options.ActAsApi)
+                    {
+                        o.CreateConventionalResource(options.AppOptions.Scope, options.AppOptions.DisplayName);
+                    }
+                    if (options.ActAsClient)
+                    {
+                        o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath, options.AppOptions.AdditionalScopes);
+                    }
+                    if (options.CreateClientCredentialsMetadata)
+                    {
+                        o.CreateConventionalClientCredentials(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.ClientCredentialsScopes);
+                    }
+                });
+            }
 
             return builder;
         }
