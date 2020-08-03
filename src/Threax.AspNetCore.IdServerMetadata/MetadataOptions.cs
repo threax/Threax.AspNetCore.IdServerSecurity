@@ -74,7 +74,7 @@ namespace Threax.AspNetCore.IdServerMetadata
                 LogoutUri = $"{MetadataConstants.HostVariable}{logoutUri}",
                 AllowedScopes = allowedScopes,
                 LogoutSessionRequired = true,
-                EnableLocalLogin = false,
+                EnableLocalLogin = true,
                 AccessTokenLifetime = 3600
             };
         }
