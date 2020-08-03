@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddIdServerMetadataClient(this IServiceCollection builder)
         {
-            builder.TryAddScoped<MetadataClient>();
+            builder.AddHttpClient<IMetadataClient, MetadataClient>();
 
             return builder;
         }

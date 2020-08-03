@@ -16,283 +16,95 @@ using Threax.AspNetCore.IdServerMetadata;
 
 namespace Threax.AspNetCore.IdServerMetadata.Client
 {
-#pragma warning disable // Disable all warnings
-
-    [GeneratedCode("NSwag", "6.21.6150.29665")]
-    public partial class MetadataClient
+    public partial class MetadataClient : IMetadataClient
     {
-        public MetadataClient() : this("") { }
+        private readonly HttpClient client;
 
-        public MetadataClient(string baseUrl)
+        public MetadataClient(HttpClient client)
         {
-            BaseUrl = baseUrl;
-        }
-
-        partial void PrepareRequest(HttpClient request, ref string url);
-
-        partial void ProcessResponse(HttpClient request, HttpResponseMessage response);
-
-        public string BaseUrl { get; set; }
-
-        /// <summary>Get the client metadata from targetUrl.</summary>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public Task<ClientMetadata> ClientAsync(string targetUrl, string bearer)
-        {
-            return ClientAsync(targetUrl, bearer, CancellationToken.None);
+            this.client = client;
         }
 
         /// <summary>Get the client metadata from targetUrl.</summary>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async Task<ClientMetadata> ClientAsync(string targetUrl, string bearer, CancellationToken cancellationToken)
+        public async Task<ClientMetadata> ClientAsync(string baseUrl)
         {
-            var url_ = string.Format("{0}/{1}?", BaseUrl, "Metadata/Client");
+            baseUrl = FixBaseUrl(baseUrl);
+            var url = string.Format("{0}/{1}?", baseUrl, "Metadata/Client");
 
-            if (targetUrl != null)
-                url_ += string.Format("targetUrl={0}&", Uri.EscapeDataString(targetUrl.ToString()));
-
-            var client_ = new HttpClient();
-            var request_ = new HttpRequestMessage();
-            PrepareRequest(client_, ref url_);
-            request_.Headers.TryAddWithoutValidation("bearer", bearer);
-            request_.Method = new HttpMethod("GET");
-            request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
-            var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
-            ProcessResponse(client_, response_);
-
-            var responseData_ = await response_.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-            var status_ = ((int)response_.StatusCode).ToString();
-
-            if (status_ == "200")
+            using (var request = new HttpRequestMessage())
             {
-                var result_ = default(ClientMetadata);
-                try
+                request.Method = new HttpMethod("GET");
+                request.RequestUri = new Uri(url, UriKind.RelativeOrAbsolute);
+                using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false))
                 {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ClientMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                    return result_;
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new InvalidOperationException($"Could not read client from {url}");
+                    }
+
+                    var responseData_ = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                    return JsonConvert.DeserializeObject<ClientMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
                 }
             }
-            else
-            if (status_ == "500")
-            {
-                var result_ = default(ExceptionResult);
-                try
-                {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ExceptionResult>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
-                }
-                throw new SwaggerException<ExceptionResult>("Internal Server Error", status_, responseData_, result_, null);
-            }
-            else
-            {
-            }
-
-            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
         }
 
         /// <summary>Get the scope metadata from targetUrl.</summary>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public Task<ApiResourceMetadata> ScopeAsync(string targetUrl, string bearer)
+        public async Task<ApiResourceMetadata> ScopeAsync(string baseUrl)
         {
-            return ScopeAsync(targetUrl, bearer, CancellationToken.None);
-        }
+            baseUrl = FixBaseUrl(baseUrl);
+            var url = string.Format("{0}/{1}?", baseUrl, "Metadata/Scope");
 
-        /// <summary>Get the scope metadata from targetUrl.</summary>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async Task<ApiResourceMetadata> ScopeAsync(string targetUrl, string bearer, CancellationToken cancellationToken)
-        {
-            var url_ = string.Format("{0}/{1}?", BaseUrl, "Metadata/Scope");
-
-            if (targetUrl != null)
-                url_ += string.Format("targetUrl={0}&", Uri.EscapeDataString(targetUrl.ToString()));
-
-            var client_ = new HttpClient();
-            var request_ = new HttpRequestMessage();
-            PrepareRequest(client_, ref url_);
-            request_.Headers.TryAddWithoutValidation("bearer", bearer);
-            request_.Method = new HttpMethod("GET");
-            request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
-            var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
-            ProcessResponse(client_, response_);
-
-            var responseData_ = await response_.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-            var status_ = ((int)response_.StatusCode).ToString();
-
-            if (status_ == "200")
+            using (var request = new HttpRequestMessage())
             {
-                var result_ = default(ApiResourceMetadata);
-                try
+                request.Method = new HttpMethod("GET");
+                request.RequestUri = new Uri(url, UriKind.RelativeOrAbsolute);
+                using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false))
                 {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ApiResourceMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                    return result_;
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new InvalidOperationException($"Could not read client from {url}");
+                    }
+
+                    var responseData_ = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                    return JsonConvert.DeserializeObject<ApiResourceMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
                 }
             }
-            else
-            if (status_ == "500")
-            {
-                var result_ = default(ExceptionResult);
-                try
-                {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ExceptionResult>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
-                }
-                throw new SwaggerException<ExceptionResult>("Internal Server Error", status_, responseData_, result_, null);
-            }
-            else
-            {
-            }
-
-            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
-        }
-
-
-        /// <summary>Get the client metadata from targetUrl.</summary>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public Task<ClientMetadata> ClientCredentialsAsync(string targetUrl, string bearer)
-        {
-            return ClientCredentialsAsync(targetUrl, bearer, CancellationToken.None);
         }
 
         /// <summary>Get the client metadata from targetUrl.</summary>
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async Task<ClientMetadata> ClientCredentialsAsync(string targetUrl, string bearer, CancellationToken cancellationToken)
+        public async Task<ClientMetadata> ClientCredentialsAsync(string baseUrl)
         {
-            var url_ = string.Format("{0}/{1}?", BaseUrl, "Metadata/ClientCredentials");
+            baseUrl = FixBaseUrl(baseUrl);
+            var url = string.Format("{0}/{1}?", baseUrl, "Metadata/ClientCredentials");
 
-            if (targetUrl != null)
-                url_ += string.Format("targetUrl={0}&", Uri.EscapeDataString(targetUrl.ToString()));
-
-            var client_ = new HttpClient();
-            var request_ = new HttpRequestMessage();
-            PrepareRequest(client_, ref url_);
-            request_.Headers.TryAddWithoutValidation("bearer", bearer);
-            request_.Method = new HttpMethod("GET");
-            request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
-            var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
-            ProcessResponse(client_, response_);
-
-            var responseData_ = await response_.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-            var status_ = ((int)response_.StatusCode).ToString();
-
-            if (status_ == "200")
+            using (var request = new HttpRequestMessage())
             {
-                var result_ = default(ClientMetadata);
-                try
+                request.Method = new HttpMethod("GET");
+                request.RequestUri = new Uri(url, UriKind.RelativeOrAbsolute);
+                using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false))
                 {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ClientMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                    return result_;
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new InvalidOperationException($"Could not read client from {url}");
+                    }
+
+                    var responseData_ = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                    return JsonConvert.DeserializeObject<ClientMetadata>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
                 }
             }
-            else
-            if (status_ == "500")
+        }
+
+        private static string FixBaseUrl(string baseUrl)
+        {
+            if (baseUrl.EndsWith("/") || baseUrl.EndsWith("\\"))
             {
-                var result_ = default(ExceptionResult);
-                try
-                {
-                    if (responseData_.Length > 0)
-                        result_ = JsonConvert.DeserializeObject<ExceptionResult>(Encoding.UTF8.GetString(responseData_, 0, responseData_.Length));
-                }
-                catch (Exception exception)
-                {
-                    throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, exception);
-                }
-                throw new SwaggerException<ExceptionResult>("Internal Server Error", status_, responseData_, result_, null);
-            }
-            else
-            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
             }
 
-            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
-        }
-
-    }
-
-    internal class SwaggerException<T> : Exception
-    {
-        private object p;
-        private byte[] responseData_;
-        private ExceptionResult result_;
-        private string status_;
-        private string v;
-
-        public SwaggerException()
-        {
-        }
-
-        public SwaggerException(string message) : base(message)
-        {
-        }
-
-        public SwaggerException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        public SwaggerException(string v, string status_, byte[] responseData_, ExceptionResult result_, object p)
-        {
-            this.v = v;
-            this.status_ = status_;
-            this.responseData_ = responseData_;
-            this.result_ = result_;
-            this.p = p;
-        }
-    }
-
-    internal class SwaggerException : Exception
-    {
-        private Exception exception;
-        private byte[] responseData_;
-        private string status_;
-        private string v;
-
-        public SwaggerException()
-        {
-        }
-
-        public SwaggerException(string message) : base(message)
-        {
-        }
-
-        public SwaggerException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        public SwaggerException(string v, string status_, byte[] responseData_, Exception exception)
-        {
-            this.v = v;
-            this.status_ = status_;
-            this.responseData_ = responseData_;
-            this.exception = exception;
+            return baseUrl;
         }
     }
 }
