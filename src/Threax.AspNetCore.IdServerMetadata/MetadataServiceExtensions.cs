@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Threax.AspNetCore.IdServerMetadata;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

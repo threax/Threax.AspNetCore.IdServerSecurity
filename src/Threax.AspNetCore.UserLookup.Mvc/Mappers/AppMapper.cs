@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Threax.AspNetCore.UserLookup.Mvc.ViewModels;
 
 namespace Threax.AspNetCore.UserLookup.Mvc.Mappers
 {
@@ -10,13 +10,19 @@ namespace Threax.AspNetCore.UserLookup.Mvc.Mappers
     /// Usually this is just a thin wrapper over automapper, but it establishes what mappings
     /// are supported and enables more advanced mappings between multiple objects.
     /// </summary>
-    public partial class AppMapper
+    public class AppMapper
     {
-        private IMapper mapper;
-
-        public AppMapper(IMapper mapper)
+        public AppMapper()
         {
-            this.mapper = mapper;
+            
+        }
+
+        public UserSearch MapValue(IUserSearch src, UserSearch dest)
+        {
+            dest.UserId = src.UserId;
+            dest.UserName = src.UserName;
+
+            return dest;
         }
     }
 }

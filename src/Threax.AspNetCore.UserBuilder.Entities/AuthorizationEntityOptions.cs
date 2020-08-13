@@ -14,7 +14,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
         public String UserToRoleTableName { get; set; } = "spc.auth.UsersToRoles";
 
-#if NETCOREAPP3_0
+#if NETCOREAPP3_1
 
         private ContextOptionsExtensionsInfo extensionInfo;
 

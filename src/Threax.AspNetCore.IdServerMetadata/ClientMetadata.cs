@@ -1,11 +1,9 @@
-﻿using Halcyon.HAL.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Threax.AspNetCore.IdServerMetadata
 {
-    [HalModel]
     public class ClientMetadata
     {
         public String ClientId { get; set; }
