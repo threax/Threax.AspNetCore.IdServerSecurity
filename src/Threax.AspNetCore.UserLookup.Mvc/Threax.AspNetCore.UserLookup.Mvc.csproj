@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Version>3.0.0-pre03</Version>
+    <Version>3.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1705;1509;1591</NoWarn>
@@ -10,13 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1-pre01" />
-    <PackageReference Include="Threax.AspNetCore.UserBuilder.Entities" Version="5.0.1-pre01" />
-    <PackageReference Include="Threax.AspNetCore.Models" Version="7.0.1-pre01" />
-    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1-pre01" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1" />
+    <PackageReference Include="Threax.AspNetCore.Models" Version="7.0.1" />
+    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Threax.AspNetCore.UserBuilder.Entities\Threax.AspNetCore.UserBuilder.Entities.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.UserLookup\Threax.AspNetCore.UserLookup.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.UserBuilder\Threax.AspNetCore.UserBuilder.csproj" />
   </ItemGroup>

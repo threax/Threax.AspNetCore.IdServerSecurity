@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Version>6.0.1-pre01</Version>
+    <Version>6.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -17,8 +17,8 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.0" />
-    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1-pre01" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1-pre01" />
+    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

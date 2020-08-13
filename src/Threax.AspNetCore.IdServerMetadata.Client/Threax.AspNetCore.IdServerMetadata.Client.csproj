@@ -12,14 +12,14 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
-    <Version>2.1.1-pre03</Version>
+    <Version>2.1.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReleaseNotes>Reimplemented client. Does not require the bearer that wasn't being sent anyway.</PackageReleaseNotes>
   </PropertyGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.0" />
-    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1-pre01" />
+    <PackageReference Include="Threax.AspNetCore.ExceptionFilter" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
