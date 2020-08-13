@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Version>3.1.1-pre02</Version>
+    <Version>3.1.1-pre03</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.1.1-pre01" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1-pre01" />
   </ItemGroup>
 
 </Project>
