@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
-    <Version>2.0.1</Version>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <Version>3.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1705;1509;1591</NoWarn>
-    <PackageReleaseNotes>Update to IdentityModel 4.0.0 and above.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .net core 5.0 and IdentityModel 5.0.0 and above.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

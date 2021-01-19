@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Version>3.1.1</Version>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <Version>4.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -11,20 +11,12 @@
     <NoWarn>1701;1702;1705;1509;1591</NoWarn>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageReleaseNotes>Removed auth from metadata. However, it can also be disabled after initial setup.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .net core 5.0 and IdentityModel 5.0.0 and above.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.1" />
-  </ItemGroup>
-
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1" />
   </ItemGroup>
 

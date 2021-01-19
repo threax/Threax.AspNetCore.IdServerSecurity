@@ -17,9 +17,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities
         /// Add the authorization database.
         /// </summary>
         /// <param name="services">The service collection.</param>
-        /// <param name="connectionString">The connection string.</param>
-        /// <param name="migrationsAssembly">The assembly to apply migrations to.</param>
-        /// <param name="authDbOptions">Options for the database.</param>
         /// <returns>The service collection.</returns>
         public static IServiceCollection AddAuthorizationDatabase<TSubclassType>(this IServiceCollection services)
             where TSubclassType : UsersDbContext

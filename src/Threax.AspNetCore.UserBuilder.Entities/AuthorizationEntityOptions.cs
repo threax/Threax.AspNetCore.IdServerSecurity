@@ -14,8 +14,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
         public String UserToRoleTableName { get; set; } = "spc.auth.UsersToRoles";
 
-#if NETCOREAPP3_1
-
         private ContextOptionsExtensionsInfo extensionInfo;
 
         public AuthorizationEntityOptions()
@@ -49,21 +47,6 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
             }
         }
-
-#elif NETSTANDARD2_0
-
-        public bool ApplyServices(IServiceCollection services)
-        {
-            return false;
-        }
-
-        public string LogFragment => "";
-
-        public long GetServiceProviderHashCode()
-        {
-            return 0;
-        }
-#endif
 
         public void Validate(IDbContextOptions options)
         {
