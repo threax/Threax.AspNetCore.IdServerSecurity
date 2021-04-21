@@ -8,6 +8,8 @@ namespace Threax.AspNetCore.AuthCore
 {
     public static class ClaimsPrincipalExtensions
     {
+        private const string NameIdentifierType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+
         /// <summary>
         /// Get the access token.
         /// </summary>
@@ -25,7 +27,12 @@ namespace Threax.AspNetCore.AuthCore
         /// <returns>The guid for the user.</returns>
         public static Guid GetUserGuid(this ClaimsPrincipal identity)
         {
-            return new Guid(identity.Claims.FirstOrDefault(i => i.Type == ClaimTypes.ObjectGuid).Value);
+            var sub = identity.FindFirst(NameIdentifierType);
+            if(sub == null)
+            {
+                throw new InvalidOperationException($"Cannot find '{NameIdentifierType}' claim on identity.");
+            }
+            return new Guid(sub.Value);
         }
 
         /// <summary>

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Http;
-using IdentityModel.Client;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

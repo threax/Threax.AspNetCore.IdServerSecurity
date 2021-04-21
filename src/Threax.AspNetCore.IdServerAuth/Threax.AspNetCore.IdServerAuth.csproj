@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
-    <Version>7.0.0</Version>
+    <Version>8.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -16,7 +16,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
     <ProjectReference Include="..\Threax.AspNetCore.IdServerMetadata\Threax.AspNetCore.IdServerMetadata.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.JwtCookieAuth\Threax.AspNetCore.JwtCookieAuth.csproj" />
     <ProjectReference Include="..\Threax.AspNetCore.UserBuilder\Threax.AspNetCore.UserBuilder.csproj" />
