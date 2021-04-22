@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -73,7 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             services.AddThreaxSharedHttpClient();
-
+            
             if (options.ActAsClient)
             {
                 authBuilder.AddJwtCookie(AuthCoreSchemes.Cookies, o =>
@@ -104,7 +105,10 @@ namespace Microsoft.Extensions.DependencyInjection
                     o.SaveTokens = true;
                     o.UseTokenLifetime = true;
                     o.GetClaimsFromUserInfoEndpoint = false;
+                    o.CallbackPath = options.CallbackPath;
+                    o.SignedOutCallbackPath = options.SignedOutCallbackPath;
                     o.RemoteSignOutPath = options.RemoteSignOutPath;
+                    o.SignedOutRedirectUri = options.SignedOutRedirectUri;
                     o.TokenValidationParameters.ValidAudiences = new String[] { options.AppOptions.Scope };
                     o.TokenValidationParameters.ValidateAudience = true;
 
@@ -121,6 +125,13 @@ namespace Microsoft.Extensions.DependencyInjection
                             o.Scope.Add(scope);
                         }
                     }
+
+                    o.Events.OnSignedOutCallbackRedirect = async c =>
+                    {
+                        //When signed out endpoint is called, sign out of cookie auth
+                        await c.HttpContext.SignOutAsync(JwtCookieAuthenticationDefaults.AuthenticationScheme);
+                    };
+
                     options.CustomizeOpenIdConnect?.Invoke(o);
                 });
             }
@@ -177,7 +188,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                     if (options.ActAsClient)
                     {
-                        o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.RemoteSignOutPath, options.AppOptions.AdditionalScopes);
+                        o.CreateConventionalClient(options.AppOptions.ClientId, options.AppOptions.DisplayName, options.AppOptions.Scope, options.SignedOutCallbackPath, options.AppOptions.AdditionalScopes);
                     }
                     if (options.CreateClientCredentialsMetadata)
                     {

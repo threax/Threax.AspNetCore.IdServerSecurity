@@ -185,7 +185,8 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 Secure = true,
                 HttpOnly = Options.BearerHttpOnly,
                 Path = cookiePath,
-                Expires = expires
+                Expires = expires,
+                SameSite = Options.SameSite
             });
 
             Response.Cookies.Append(RefreshCookieName, refreshToken, new CookieOptions()
@@ -193,7 +194,8 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 Secure = true,
                 HttpOnly = Options.RefreshHttpOnly,
                 Path = cookiePath,
-                Expires = expires
+                Expires = expires,
+                SameSite = Options.SameSite
             });
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
 using System;
 using Threax.AspNetCore.JwtCookieAuth;
 
@@ -49,9 +50,31 @@ namespace Threax.AspNetCore.IdServerAuth
         public String DefaultScheme { get; set; }
 
         /// <summary>
-        /// The signout path to use when signing out. Defaults to "/Account/SignoutCleanup".
+        /// The request path within the application's base path where the user-agent will
+        /// be returned. The middleware will process this request when it arrives.
+        /// Default: "/signin-oidc"
         /// </summary>
-        public String RemoteSignOutPath { get; set; } = "/Account/SignoutCleanup";
+        public PathString CallbackPath { get; set; } = new PathString("/signin-oidc");
+
+        /// <summary>
+        /// The request path within the application's base path where the user agent will be returned after sign out from the identity provider.
+        /// See post_logout_redirect_uri from http://openid.net/specs/openid-connect-session-1_0.html#RedirectionAfterLogout.
+        /// Default: "/signout-callback-oidc"
+        /// </summary>
+        public PathString SignedOutCallbackPath { get; set; } = new PathString("/signout-callback-oidc");
+
+        /// <summary>
+        /// Requests received on this path will cause the handler to invoke SignOut using the SignInScheme.
+        /// Default: "/Account/SignoutCleanup"
+        /// </summary>
+        public PathString RemoteSignOutPath { get; set; } = new PathString("/Account/SignoutCleanup");
+
+        /// <summary>
+        /// The uri where the user agent will be redirected to after application is signed out from the identity provider.
+        /// The redirect will happen after the SignedOutCallbackPath is invoked.
+        /// </summary>
+        /// <remarks>This URI can be out of the application's domain. By default it points to the root. "/"</remarks>
+        public String SignedOutRedirectUri { get; set; } = "/";
 
         /// <summary>
         /// The signout path to use when signing out. Defaults to "/Account/SignoutCleanup".

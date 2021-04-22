@@ -91,13 +91,18 @@ namespace Threax.AspNetCore.JwtCookieAuth
         public TimeSpan ClockSkew { get; set; } = TimeSpan.FromSeconds(5);
 
         /// <summary>
-        /// Set this to true to make bearer cookies http only. Default: true.
+        /// Set this to true to make bearer cookies http only. Default: false.
         /// </summary>
-        public bool BearerHttpOnly { get; set; } = true;
+        public bool BearerHttpOnly { get; set; } = false;
 
         /// <summary>
         /// Set this to true to make refresh cookies http only. Default: true.
         /// </summary>
         public bool RefreshHttpOnly { get; set; } = true;
+
+        /// <summary>
+        /// Set the same site mode for cookies. Default: 'Lax'
+        /// </summary>
+        public SameSiteMode SameSite { get; set; } = SameSiteMode.Lax;
     }
 }
