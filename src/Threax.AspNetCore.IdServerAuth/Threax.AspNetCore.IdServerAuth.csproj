@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
-    <Version>8.1.0</Version>
+    <Version>9.0.0-pre01</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -11,7 +11,7 @@
     <Authors>Andrew Piper</Authors>
     <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</PackageProjectUrl>
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.IdServerSecurity</RepositoryUrl>
-    <PackageReleaseNotes>Update to .net core 5.0 and IdentityModel 5.0.0 and above.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated JWT Cookie Auth with new flow.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   

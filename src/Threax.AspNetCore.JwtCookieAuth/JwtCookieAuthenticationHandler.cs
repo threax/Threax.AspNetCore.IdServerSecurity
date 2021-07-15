@@ -1,5 +1,6 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
@@ -21,21 +22,30 @@ namespace Threax.AspNetCore.JwtCookieAuth
         IAuthenticationSignInHandler,
         IAuthenticationSignOutHandler
     {
-        private ITokenValidationParametersProvider tokenValidationParametersProvider;
-        private String responseRedirectPath = null;
-        private ISharedHttpClient sharedHttpClient;
+        private readonly ITokenValidationParametersProvider tokenValidationParametersProvider;
+        private readonly ISharedHttpClient sharedHttpClient;
+        private readonly ICookieManager cookieManager;
 
-        public JwtCookieAuthenticationHandler(IOptionsMonitor<JwtCookieAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ITokenValidationParametersProvider tokenValidationParametersProvider, ISharedHttpClient sharedHttpClient)
+        private String responseRedirectPath = null;
+
+        public JwtCookieAuthenticationHandler(
+            IOptionsMonitor<JwtCookieAuthenticationOptions> options, 
+            ILoggerFactory logger, 
+            UrlEncoder encoder, 
+            ISystemClock clock, 
+            ITokenValidationParametersProvider tokenValidationParametersProvider, 
+            ISharedHttpClient sharedHttpClient)
             : base(options, logger, encoder, clock)
         {
             this.tokenValidationParametersProvider = tokenValidationParametersProvider;
             this.sharedHttpClient = sharedHttpClient;
+            this.cookieManager = new ChunkingCookieManager();
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            String accessTokenString;
-            if (!Request.Cookies.TryGetValue(BearerCookieName, out accessTokenString))
+            String accessTokenString = cookieManager.GetRequestCookie(Context, BearerCookieName);
+            if (accessTokenString == null)
             {
                 return AuthenticateResult.NoResult();
             }
@@ -46,32 +56,34 @@ namespace Threax.AspNetCore.JwtCookieAuth
             SecurityToken token = null;
 
             var accessTokenValidationParameters = await this.tokenValidationParametersProvider.GetTokenValidationParameters(Options);
+            bool setupUserClaims = true;
+            bool expired = false;
 
             try
             {
-                principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
+                principal = ValidateAndGetAccessToken(accessTokenString, handler, accessTokenValidationParameters, out token);
+
+                //If not already expired and if we are beyond halfway through the refresh period, refresh the token from the id server.
+                var timeSpan = token.ValidTo - token.ValidFrom;
+                timeSpan = new TimeSpan(timeSpan.Ticks / 2);
+                var endTime = token.ValidFrom + timeSpan;
+                expired = DateTime.UtcNow > endTime;
             }
             catch (SecurityTokenExpiredException ex)
             {
-                EraseCookies();
-                responseRedirectPath = Context.Request.GetDisplayUrl();
-                Logger.LogInformation($"SecurityTokenExpiredException: Erasing Cookies and Redirecting to {responseRedirectPath}. Exception Message:\n{ex.Message}");
-                return AuthenticateResult.Fail(ex);
+                Logger.LogInformation($"SecurityTokenExpiredException: Will attempt to refresh. Exception Message: '{ex.Message}'");
+                expired = true;
             }
-            CheckSecurityAlgo(token);
 
-            //If we are beyond halfway through the refresh period, refresh the token from the id server.
-            var timeSpan = token.ValidTo - token.ValidFrom;
-            timeSpan = new TimeSpan(timeSpan.Ticks / 2);
-            var endTime = token.ValidFrom + timeSpan;
-            bool setupUserClaims = true;
-
-            if (DateTime.UtcNow > endTime)
+            if (expired)
             {
                 //Refresh from id server
-                String refreshToken;
-                if (!Request.Cookies.TryGetValue(RefreshCookieName, out refreshToken))
+                String refreshToken = cookieManager.GetRequestCookie(Context, RefreshCookieName);
+                if (refreshToken == null)
                 {
+                    EraseCookies();
+                    responseRedirectPath = Context.Request.GetDisplayUrl();
+                    Logger.LogInformation($"No refresh token found. Cannot refresh credentials.");
                     return AuthenticateResult.Fail("No refresh token.");
                 }
 
@@ -86,13 +98,18 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 if (response.IsError)
                 {
                     setupUserClaims = false;
+                    EraseCookies();
+                    responseRedirectPath = Context.Request.GetDisplayUrl();
+                    Logger.LogInformation($"Error refreshing token. Erasing Cookies and Redirecting to '{responseRedirectPath}'. Error Info: '{response.Error}' '{response.ErrorDescription}' '{response.ErrorType}'");
                     return AuthenticateResult.Fail($"Could not refresh access token from {connectUri.AbsoluteUri}. Http Status Code: {response.HttpStatusCode} Message: {response.Error}");
                 }
                 else
                 {
-                    //Update the cookie
-                    SetTokenCookies(response.AccessToken, token, response.RefreshToken);
                     accessTokenString = response.AccessToken;
+                    principal = ValidateAndGetAccessToken(accessTokenString, handler, accessTokenValidationParameters, out token);
+                    SetTokenCookies(accessTokenString, token, response.RefreshToken);
+
+                    Logger.LogInformation($"Sucessfully refreshed access token.");
                 }
             }
 
@@ -133,15 +150,10 @@ namespace Threax.AspNetCore.JwtCookieAuth
         {
             var accessTokenString = properties.Items[".Token.access_token"];
 
-            //Parse the access token
-            var handler = new JwtSecurityTokenHandler();
-            ClaimsPrincipal principal = null;
-            SecurityToken token = null;
-
             //Validate the token
+            var handler = new JwtSecurityTokenHandler();
             var accessTokenValidationParameters = await this.tokenValidationParametersProvider.GetTokenValidationParameters(Options);
-            principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
-            CheckSecurityAlgo(token);
+            ValidateAndGetAccessToken(accessTokenString, handler, accessTokenValidationParameters, out var token);
 
             SetTokenCookies(accessTokenString, token, properties.Items[".Token.refresh_token"]);
         }
@@ -158,14 +170,14 @@ namespace Threax.AspNetCore.JwtCookieAuth
             //There is no end to the pain of trying to get this right, fix the path here to ensure its correct.
             var cookiePath = CookieUtils.FixPath(Options.CookiePath);
 
-            Response.Cookies.Delete(BearerCookieName, new CookieOptions()
+            cookieManager.DeleteCookie(Context, BearerCookieName, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = Options.BearerHttpOnly,
                 Path = cookiePath
             });
 
-            Response.Cookies.Delete(RefreshCookieName, new CookieOptions()
+            cookieManager.DeleteCookie(Context, RefreshCookieName, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = Options.RefreshHttpOnly,
@@ -180,7 +192,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
 
             var expires = Options.StoreCookiesInSession ? default(DateTimeOffset?) : token.ValidTo;
 
-            Response.Cookies.Append(BearerCookieName, accessToken, new CookieOptions()
+            cookieManager.AppendResponseCookie(Context, BearerCookieName, accessToken, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = Options.BearerHttpOnly,
@@ -189,7 +201,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 SameSite = Options.SameSite
             });
 
-            Response.Cookies.Append(RefreshCookieName, refreshToken, new CookieOptions()
+            cookieManager.AppendResponseCookie(Context, RefreshCookieName, refreshToken, new CookieOptions()
             {
                 Secure = true,
                 HttpOnly = Options.RefreshHttpOnly,
@@ -202,7 +214,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
         protected override Task HandleChallengeAsync(AuthenticationProperties properties)
         {
             //If there is a bearer cookie for any reason, consider the user to be forbidden, dont challenge them in this case.
-            if (Request.Cookies.ContainsKey(BearerCookieName))
+            if (cookieManager.GetRequestCookie(Context, BearerCookieName) != null)
             {
                 return this.ForbidAsync(properties);
             }
@@ -229,18 +241,6 @@ namespace Threax.AspNetCore.JwtCookieAuth
             return base.HandleForbiddenAsync(properties);
         }
 
-        private void CheckSecurityAlgo(SecurityToken token)
-        {
-            //This algorithm check NEEDS to stay, we have to make sure it is not set to none
-            //If this were to be set to none, the signature check would pass since it
-            //would be set to none, this would make it trivial to forge jwts.
-            var jwt = token as JwtSecurityToken;
-            if (!jwt.Header.Alg.Equals(Options.SecurityTokenAlgo, StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException($"Algorithm must be '{Options.SecurityTokenAlgo}'");
-            }
-        }
-
         /// <summary>
         /// The name of the cookie for the bearer token.
         /// </summary>
@@ -250,5 +250,21 @@ namespace Threax.AspNetCore.JwtCookieAuth
         /// The name of the cookie for the refresh token.
         /// </summary>
         private String RefreshCookieName => $"{Options.ClientId}.RefreshToken";
+
+        private ClaimsPrincipal ValidateAndGetAccessToken(string accessTokenString, JwtSecurityTokenHandler handler, TokenValidationParameters accessTokenValidationParameters, out SecurityToken token)
+        {
+            var principal = handler.ValidateToken(accessTokenString, accessTokenValidationParameters, out token);
+
+            //This algorithm check NEEDS to stay, we have to make sure it is not set to none
+            //If this were to be set to none, the signature check would pass since it
+            //would be set to none, this would make it trivial to forge jwts.
+            var jwt = token as JwtSecurityToken;
+            if (!jwt.Header.Alg.Equals(Options.SecurityTokenAlgo, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException($"Algorithm must be '{Options.SecurityTokenAlgo}'");
+            }
+
+            return principal;
+        }
     }
 }
