@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="14.4.1" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Ext" Version="15.0.0" />
   </ItemGroup>
 
 </Project>
