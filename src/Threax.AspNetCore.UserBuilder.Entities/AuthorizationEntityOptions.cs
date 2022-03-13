@@ -37,7 +37,7 @@ namespace Threax.AspNetCore.UserBuilder.Entities
 
             public override string LogFragment => "";
 
-            public override long GetServiceProviderHashCode()
+            public override int GetServiceProviderHashCode()
             {
                 return 0;
             }
@@ -45,6 +45,13 @@ namespace Threax.AspNetCore.UserBuilder.Entities
             public override void PopulateDebugInfo([NotNullAttribute] IDictionary<string, string> debugInfo)
             {
 
+            }
+
+            public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
+            {
+                //Not really sure if this should be true or false
+                //Trying false for now since we are returning 0 for the hash code
+                return false;
             }
         }
 
