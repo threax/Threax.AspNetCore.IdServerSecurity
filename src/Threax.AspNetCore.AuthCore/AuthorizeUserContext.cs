@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Security.Claims;
-using System.Text;
 
 namespace Threax.AspNetCore.AuthCore
 {
@@ -10,10 +7,10 @@ namespace Threax.AspNetCore.AuthCore
     {
         private bool rejected = false;
 
-        public AuthorizeUserContext(ClaimsPrincipal claimsPrincipal, HttpContext httpContext)
+        public AuthorizeUserContext(ClaimsPrincipal claimsPrincipal, IServiceProvider requestServices)
         {
             this.ClaimsPrincipal = claimsPrincipal;
-            this.HttpContext = httpContext;
+            this.RequestServices = requestServices;
         }
 
         public void Reject()
@@ -31,6 +28,6 @@ namespace Threax.AspNetCore.AuthCore
 
         public ClaimsPrincipal ClaimsPrincipal { get; private set; }
 
-        public HttpContext HttpContext { get; private set; }
+        public IServiceProvider RequestServices { get; private set; }
     }
 }

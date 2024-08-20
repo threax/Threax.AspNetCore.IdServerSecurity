@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -24,31 +25,31 @@ namespace Threax.AspNetCore.IdServerAuth
         public async Task TokenValidated(TokenValidatedContext context)
         {
             //Add the access token to the claims
-            var claimsId = context.Principal.Identity as ClaimsIdentity;
+            var claimsId = (ClaimsIdentity)context.Principal.Identity;
+            var securityToken = (JsonWebToken)context.SecurityToken;
+
             if (claimsId != null)
             {
-                claimsId.AddClaim(new Claim(AuthCore.ClaimTypes.AccessToken, (context.SecurityToken as JwtSecurityToken).RawData));
+                claimsId.AddClaim(new Claim(AuthCore.ClaimTypes.AccessToken, securityToken.EncodedToken));
             }
-
-            var jwt = context.SecurityToken as JwtSecurityToken;
 
             //This algorithm check NEEDS to stay, we have to make sure it is not set to none
             //If this were to be set to none, the signature check would pass since it
             //would be set to none, this would make it trivial to forge jwts.
-            if (!jwt.Header.Alg.Equals(securityTokenAlgo, StringComparison.Ordinal))
+            if (!securityToken.Alg.Equals(securityTokenAlgo, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException($"Algorithm must be '{securityTokenAlgo}'");
             }
 
             var now = DateTime.UtcNow;
-            if (now < (jwt.ValidFrom - clockSkew) || now > (jwt.ValidTo + clockSkew))
+            if (now < (securityToken.ValidFrom - clockSkew) || now > (securityToken.ValidTo + clockSkew))
             {
                 //Check dates, return unauthorized if they do not match
-                context.Fail($"Dates not valid. Time is {now} token valid from: {jwt.ValidFrom} to: {jwt.ValidTo}");
+                context.Fail($"Dates not valid. Time is {now} token valid from: {securityToken.ValidFrom} to: {securityToken.ValidTo}");
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
 
-            var authContext = new AuthorizeUserContext(context.Principal, context.HttpContext);
+            var authContext = new AuthorizeUserContext(context.Principal, context.HttpContext.RequestServices);
 
             if (OnAuthorizeUser != null)
             {

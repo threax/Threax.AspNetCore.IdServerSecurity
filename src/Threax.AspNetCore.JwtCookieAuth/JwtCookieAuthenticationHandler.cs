@@ -113,7 +113,7 @@ namespace Threax.AspNetCore.JwtCookieAuth
                 }
             }
 
-            var authUserContext = new AuthorizeUserContext(principal, Context);
+            var authUserContext = new AuthorizeUserContext(principal, Context.RequestServices);
 
             if (setupUserClaims)
             {

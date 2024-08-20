@@ -11,7 +11,7 @@ namespace Threax.AspNetCore.UserBuilder
     {
         public static async Task BuildUserWithRequestServices(this AuthorizeUserContext context)
         {
-            var userBuilder = context.HttpContext.RequestServices.GetService<IUserBuilder>();
+            var userBuilder = context.RequestServices.GetService<IUserBuilder>();
             if (!await userBuilder.ValidateAndBuildUser(context.ClaimsPrincipal))
             {
                 context.Reject();
